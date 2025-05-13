@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Mobile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Menu gauche : Profil -->
+  <aside id="menu-gauche" class="side-menu">
+    <button class="close-btn" onclick="toggleMenuGauche()">✕</button>
+    <h2>À propos de moi</h2>
+    <p>Ici tu peux écrire une version plus complète de ta présentation personnelle.</p>
+  </aside>
+
+  <!-- Menu droite : Navigation -->
+  <aside id="menu-droite" class="side-menu right">
+    <button class="close-btn" onclick="toggleMenuDroite()">✕</button>
+    <nav>
+      <a href="#presentation">Présentation</a>
+      <a href="#projets">Projets</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </aside>
+
+  <!-- Contenu principal -->
+  <div class="container">
+    <header>
+      <button class="icon-btn" onclick="toggleMenuGauche()">👤</button>
+      <button class="icon-btn right" onclick="toggleMenuDroite()">☰</button>
+    </header>
+
+    <main>
+      <section class="card" id="presentation">
+        <h3>Présentation de moi</h3>
+        <p>Texte de présentation...</p>
+      </section>
+
+      <section class="card" id="projets">
+        <h3>Encart réalisation de projets synthétisés</h3>
+        <div class="project-preview">
+          <div class="project" onclick="zoomProject(this)">Projet 1</div>
+          <div class="project" onclick="zoomProject(this)">Projet 2</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
