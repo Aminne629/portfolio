@@ -9,7 +9,8 @@
     font-family: sans-serif;
     background-color: #fff;
     color: #333;
-    background-color: #333;
+    background-color: #b5c6d0;
+
   }
   
   .container {
@@ -104,3 +105,53 @@
     background-color: #ddd;
   }
   
+  img{
+    width: 25px;
+    height: 25px;
+  }
+
+
+  #menu-gauche{
+    background-color: #333;
+  }
+
+  #menu-droite{
+    background-color: #333;
+
+  }
+
+  #menu-droite > nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* ajoute un espace entre les liens */
+  width: 50vw;
+  height: 100vh;
+}
+
+/* Cible les liens <a> dans la nav */
+#menu-droite > nav a {
+  text-decoration: none;
+  color: grey; /* ou la couleur que tu veux */
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: #b5c6d0 solid 2px;
+  text-align: center;
+  padding: 15px;
+  border-radius: 25px;
+
+  /* Shadow stylée */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Effet au survol */
+#menu-droite > nav a:hover {
+  color: #f1f3f5;
+  text-decoration: underline; /* ou none si tu veux rien */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
