@@ -3,86 +3,417 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
+  <title>Amine Benaziza</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Portfolio</h1>
-    <div class="hamburger" id="hamburger-btn">☰</div>
-    <nav id="side-menu">
-      <span id="close-menu">&times;</span>
-      <ul>
-        <li><a href="#">Accueil</a></li>
-        <li><a href="projets.html">Projets</a></li>
-        <li><a href="contact.html">Contact</a></li>
+    <nav>
+      <div class="logo">
+        <h3></h3>
+      </div>
+      <ul id="navbar">
+        <li><a href="#home" class="nav-link" data-translate="Accueil">Accueil</a></li>
+        <li><a href="#about" class="nav-link" data-translate="À propos">À propos</a></li>
+        <li><a href="#projects" class="nav-link" data-translate="Projets">Projets</a></li>
+        <li><a href="#contact" class="nav-link" data-translate="Contact">Contact</a></li>
       </ul>
+      
+      <button id="lang-toggle" class="lang-toggle" aria-label="Changer de langue">EN</button>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Basculer le mode sombre">
+        <i class="fas fa-moon"></i>
+      </button>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </nav>
   </header>
 
   <main>
-    <section class="card" id="presentation-card">
-      <h2>Présentation de moi</h2>
-      <p>Clique pour en savoir plus</p>
-    </section>
-
-    <section class="card" id="projets-card">
-      <h2>Encart réalisation de projets synthétisés</h2>
-      <p>Clique pour voir les projets</p>
-    </section>
-
-    <section class="card" id="skills-card">
-      <h2>Compétences synthétisées</h2>
-      <div id="list-container">
-        <ul class="skills-list">
-          <p>Langages de programmation :</p>
-          <li>HTML/CSS</li>
-          <li>JavaScript</li>
-          <li>React</li>
-          <li>Node.js</li>
-          <li>Git/GitHub</li>
-        </ul>
-        <ul class = "language-list">
-          <p>Langues maitrisées : </p>
-          <li>Francais</li>
-          <li>Anglais</li>
-          <li>Espagnol</li>
-        </ul>
+    <!-- Section Hero -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1><span data-translate="Bonjour, je suis">Bonjour, je suis</span> <span class="highlight">Amine</span></h1>
+          <h2 class="typewriter" data-translate="Développeur Junior">Développeur Junior</h2>
+          <p class="hero-description" data-translate="Un jeune développeur passioné par l'informatique.">
+            Un jeune développeur passioné par l'informatique.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary" data-translate="Voir mes projets">Voir mes projets</a>
+            <a href="#contact" class="btn btn-secondary" data-translate="Me contacter">Me contacter</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="profile-card">
+            <div class="profile-img">
+              <!-- Remplace par ta photo -->
+              <img src="img/profile.png" alt="">
+            </div>
+            <div class="profile-info">
+              <h3>Benaziza Amine</h3>
+              <p data-translate="Développeur Web">Développeur Web</p>
+              <div class="social-links">
+                <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Aminne629" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:aminekx3@gmail.com"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="card" id="contact-card">
-      <h2>Contact</h2>
-      <p>Envie de travailler ensemble ?</p>
-      <a class="btn" href="contact.html">Me contacter</a>
+    <!-- Section À propos -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title" data-translate="À propos de moi">À propos de moi</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <div class="about-card">
+              <h3><i class="fas fa-user"></i> <span data-translate="Présentation">Présentation</span></h3>
+              <p><strong data-translate="Nom">Nom</strong> : Benaziza Amine</p>
+              <p><strong data-translate="Âge">Âge</strong> : 18 <span data-translate="ans">ans</span></p>
+              <p><strong data-translate="Localisation">Localisation</strong> : Lyon / Grenoble</p>
+              <p><strong data-translate="Formation">Formation</strong> : BUT <span data-translate="Informatique">Informatique</span></p>
+              <p><strong data-translate="Métier visé">Métier visé</strong> : <span data-translate="Développeur">Développeur</span></p>
+            </div>
+            
+            <div class="about-card">
+              <h3><i class="fas fa-graduation-cap"></i> <span data-translate="Formation">Formation</span></h3>
+              <div class="education-item">
+                <h4>BUT <span data-translate="Informatique">Informatique</span></h4>
+                <p class="education-school" data-translate="IUT Informatique de Grenoble - 1ère année">IUT Informatique de Grenoble - 1ère année</p>
+                <p class="education-desc" data-translate="Une formation très enrichissante avec un personnel très professionnel, qui me forme dans le domaine de l'informatique.">Une formation très enrichissante avec un personnel très professionnel,
+                   qui me forme dans le domaine de l'informatique.</p>
+              </div>
+            </div>
+
+            <div class="about-card">
+              <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+              <p data-translate="Mon objectif est de devenir un développeur full-stack compétent, capable de créer des applications web performantes et user-friendly.">Mon objectif est de devenir un développeur full-stack compétent, capable de créer des applications web performantes et user-friendly.</p>
+              <p data-translate="J'aimerais aussi créer ma propre entreprise.">J'aimerais aussi créer ma propre entreprise.</p>
+            </div>
+          </div>
+
+          <div class="skills-section">
+            <div class="skills-card">
+              <h3><i class="fas fa-code"></i> <span data-translate="Compétences Techniques">Compétences Techniques</span></h3>
+              <div class="skills-grid">
+                <div class="skill-item">
+                  <div class="skill-name">HTML/CSS</div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-name">JavaScript</div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-name">Java</div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-name">SQL/PostgreSQL</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="skills-card">
+              <h3><i class="fas fa-users"></i> <span data-translate="Compétences Professionnelles">Compétences Professionnelles</span></h3>
+              <div class="soft-skills">
+                <span class="soft-skill" data-translate="Travail en équipe">Travail en équipe</span>
+                <span class="soft-skill" data-translate="Gestion du temps">Gestion du temps</span>
+                <span class="soft-skill" data-translate="Résolution de problèmes">Résolution de problèmes</span>
+                <span class="soft-skill" data-translate="Communication">Communication</span>
+                <span class="soft-skill" data-translate="Autonomie">Autonomie</span>
+                <span class="soft-skill" data-translate="Adaptabilité">Adaptabilité</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title" data-translate="Mes Projets">Mes Projets</h2>
+        <div class="projects-grid">
+          
+          <!-- Projet 1 -->
+          <div class="project-card" data-project="project1">
+            <div class="project-image">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="project-content">
+              <h3 data-translate="Site Atos">Site Atos</h3>
+              <p data-translate="Refonte du site de la société Atos.">Refonte du site de la société Atos.</p>
+              <div class="project-tags">
+                <span class="tag">HTML/CSS</span>
+                <span class="tag">JavaScript</span>
+              </div>
+              <button class="btn btn-small" onclick="openProjectModal('project1')" data-translate="Voir détails">Voir détails</button>
+            </div>
+          </div>
+
+          <!-- Projet 2 -->
+          <div class="project-card" data-project="project2">
+            <div class="project-image">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="project-content">
+              <h3 data-translate="Classification automatique de dépèches">Classification automatique de dépèches</h3>
+              <p data-translate="Une intelligence artificielle capable de classer une dépèche dans une catégorie.">Une intelligence artificielle capable de classer une dépèche dans une catégorie.</p>
+              <div class="project-tags">
+                <span class="tag">Java</span>
+              </div>
+              <button class="btn btn-small" onclick="openProjectModal('project2')" data-translate="Voir détails">Voir détails</button>
+            </div>
+          </div>
+
+          <!-- Projet 3 -->
+          <div class="project-card" data-project="project3">
+            <div class="project-image">
+              <i class="fas fa-gamepad"></i>
+            </div>
+            <div class="project-content">
+              <h3 data-translate="Calculatrice">Calculatrice</h3>
+              <p data-translate="Une simple calculatrice que j'ai codé sur mon temps libre.">Une simple calculatrice que j'ai codé sur mon temps libre.</p>
+              <div class="project-tags">
+                <span class="tag">Java</span>
+              </div>
+              <button class="btn btn-small" onclick="openProjectModal('project3')" data-translate="Voir détails">Voir détails</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title" data-translate="Me Contacter">Me Contacter</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <h3 data-translate="Restons en contact !">Restons en contact !</h3>
+            <p data-translate="N'hésitez pas à me contacter pour discuter d'opportunités professionnelles.">N'hésitez pas à me contacter pour discuter d'opportunités professionnelles.</p>
+            
+            <div class="contact-methods">
+              <div class="contact-method">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <h4>Email</h4>
+                  <a href="mailto:aminekx3@gmail.com">aminekx3@gmail.com</a>
+                </div>
+              </div>
+              <div class="contact-method">
+                <i class="fab fa-linkedin"></i>
+                <div>
+                  <h4>LinkedIn</h4>
+                  <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" data-translate="Cliquez pour voir mon LinkedIN.">Cliquez pour voir mon LinkedIN.</a>
+                </div>
+              </div>
+              <div class="contact-method">
+                <i class="fab fa-github"></i>
+                <div>
+                  <h4>GitHub</h4>
+                  <a href="https://github.com/Aminne629" target="_blank" data-translate="Cliquez pour voir mon github.">Cliquez pour voir mon github.</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-container">
+            <form id="contact-form" class="contact-form">
+              <h3 data-translate="Envoyez-moi un message">Envoyez-moi un message</h3>
+              <div class="form-group">
+                <label for="name" data-translate="Nom *">Nom *</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="subject" data-translate="Sujet">Sujet</label>
+                <input type="text" id="subject" name="subject">
+              </div>
+              <div class="form-group">
+                <label for="message" data-translate="Message *">Message *</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" data-translate="Envoyer le message">Envoyer le message</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 Mon Portfolio | <a href="#">Mentions légales</a></p>
+    <div class="container">
+      <p data-translate="© 2025 BENAZIZA Amine | Portfolio - Tous droits réservés">© 2025 BENAZIZA Amine | Portfolio - Tous droits réservés</p>
+      <div class="footer-links">
+        <a href="#about" data-translate="À propos">À propos</a>
+        <a href="#projects" data-translate="Projets">Projets</a>
+        <a href="#contact" data-translate="Contact">Contact</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- Modal Présentation -->
-  <div class="modal" id="modal-presentation">
-    <div class="modal-content">
-      <span class="close" data-close="modal-presentation">&times;</span>
-      <h2>À propos de moi</h2>
-      <p>Ici tu peux mettre une description plus complète de toi.</p>
-      <a class="btn" href="contact.html">Me contacter</a>
+  <!-- Modales pour les projets détaillés -->
+  
+  <!-- Modal Projet 1 -->
+  <div class="modal" id="modal-project1">
+    <div class="modal-content project-modal">
+      <span class="close" onclick="closeProjectModal('project1')">&times;</span>
+      <div class="project-detail">
+        <div class="project-header">
+          <h2 data-translate="Site Atos">Site Atos</h2>
+          <div class="project-links">
+            <a href="https://github.com/Ulio05/SAE-5-6" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
+          </div>
+        </div>
+        
+        <div class="project-sections">
+          <div class="project-section">
+            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
+            <p data-translate="J'ai développé avec 2 coéquipiers un site pour la société Atos. Ce site est un site fictif, fait pour un projet scolaire. On y retrouve tout le nécessaire pour se renseigner sur la société Atos. Il est destiné à des collégiens en recherche de stage d'observation, pour leur présenter l'entreprise et les aider à les contacter à l'aide d'une page de contact.">J'ai développé avec 2 coéquipiers un site pour la société Atos. Ce site est un site fictif, fait pour un projet scolaire. On y retrouve tout le nécessaire pour se renseigner sur la société Atos. Il est destiné à des collégiens en recherche de stage d'observation, pour leur présenter l'entreprise et les aider à les contacter à l'aide d'une page de contact.</p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+            <ul>
+              <li data-translate="Présenter la société à de jeunes collégiens">Présenter la société à de jeunes collégiens</li>
+              <li data-translate="Montrer la transition écologique de l'entreprise">Montrer la transition écologique de l'entreprise</li>
+              <li data-translate="Aider les jeunes à contacter l'entreprise pour leur stage">Aider les jeunes à contacter l'entreprise pour leur stage</li>
+            </ul>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-users"></i> <span data-translate="Travail en groupe">Travail en groupe</span></h3>
+            <p><strong data-translate="Équipe">Équipe</strong> : 3 <span data-translate="personnes">personnes</span></p>
+            <p><strong data-translate="Durée">Durée</strong> : 6 <span data-translate="semaines">semaines</span></p>
+            <p><strong data-translate="Méthodologie">Méthodologie</strong> : <span data-translate="Agile">Agile</span></p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-user"></i> <span data-translate="Ma contribution">Ma contribution</span></h3>
+            <ul>
+              <li data-translate="Développement du frontend">Développement du frontend</li>
+              <li data-translate="Mise en place du wireframe">Mise en place du wireframe</li>
+              <li data-translate="Test">Test</li>
+            </ul>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
+            <div class="tech-stack">
+              <span class="tech-item">HTML/CSS</span>
+              <span class="tech-item">JavaScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Modal Projets -->
-  <div class="modal" id="modal-projets">
-    <div class="modal-content">
-      <span class="close" data-close="modal-projets">&times;</span>
-      <h2>Projets récents</h2>
-      <div class="project-list">
-        <div class="project">Projet 1</div>
-        <div class="project">Projet 2</div>
-        <div class="project">Projet 3</div>
+  <!-- Modal Projet 2 -->
+  <div class="modal" id="modal-project2">
+    <div class="modal-content project-modal">
+      <span class="close" onclick="closeProjectModal('project2')">&times;</span>
+      <div class="project-detail">
+        <div class="project-header">
+          <h2 data-translate="Classification automatique de dépèches">Classification automatique de dépèches</h2>
+          <div class="project-links">
+            <a href="https://github.com/Aminne629/sae01-02" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
+          </div>
+        </div>
+        
+        <div class="project-sections">
+          <div class="project-section">
+            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
+            <p data-translate="Nous avons développé une méthode d'apprentissage automatique, sous-domaine de l'intelligence artificielle, qui permet à notre programme de classer une dépêche dans une catégorie en l'entraînant sur des dépêches. Pour chaque catégorie, on obtenait des mots représentatifs qui nous aidaient à déterminer la catégorie de la dépêche que l'algorithme devait classer.">Nous avons développé une méthode d'apprentissage automatique, sous-domaine de l'intelligence artificielle, qui permet à notre programme de classer une dépêche dans une catégorie en l'entraînant sur des dépêches. Pour chaque catégorie, on obtenait des mots représentatifs qui nous aidaient à déterminer la catégorie de la dépêche que l'algorithme devait classer.</p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+            <ul>
+              <li data-translate="Classer des dépèches">Classer des dépèches</li>
+              <li data-translate="Apprendre à gérer les deadlines (temps très limité)">Apprendre à gérer les deadlines (temps très limité)</li>
+              <li data-translate="Coder sans indications au préalable des professeurs.">Coder sans indications au préalable des professeurs.</li>
+            </ul>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-users"></i> <span data-translate="Travail en groupe">Travail en groupe</span></h3>
+            <p><strong data-translate="Équipe">Équipe</strong> : 2 <span data-translate="personnes">personnes</span></p>
+            <p><strong data-translate="Durée">Durée</strong> : 5 <span data-translate="jours">jours</span></p>
+            <p><strong data-translate="Méthodologie">Méthodologie</strong> : <span data-translate="Sprint">Sprint</span></p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-user"></i> <span data-translate="Ma contribution">Ma contribution</span></h3>
+            <ul>
+              <li data-translate="Développement de l'algorithme">Développement de l'algorithme</li>
+              <li data-translate="Tests et débogage">Tests et débogage</li>
+            </ul>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
+            <div class="tech-stack">
+              <span class="tech-item">Java</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <a class="btn" href="projets.html">Voir plus</a>
+    </div>
+  </div>
+
+  <!-- Modal Projet 3 -->
+  <div class="modal" id="modal-project3">
+    <div class="modal-content project-modal">
+      <span class="close" onclick="closeProjectModal('project3')">&times;</span>
+      <div class="project-detail">
+        <div class="project-header">
+          <h2 data-translate="Calculatrice">Calculatrice</h2>
+          <div class="project-links">
+            <a href="#" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
+            <a href="#" class="btn btn-small" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-translate="Demo">Demo</span></a>
+          </div>
+        </div>
+        
+        <div class="project-sections">
+          <div class="project-section">
+            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
+            <p data-translate="Calculatrice très simple capable de faire des additions, soustractions, multiplications et divisions. Je l'ai codée sur mon temps libre pour me familiariser avec Java.">Calculatrice très simple capable de faire des additions, soustractions, multiplications et divisions. Je l'ai codée sur mon temps libre pour me familiariser avec Java.</p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+            <ul>
+              <li data-translate="Travailler en autonomie sur un projet">Travailler en autonomie sur un projet</li>
+            </ul>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-user"></i> <span data-translate="Projet individuel">Projet individuel</span></h3>
+            <p><strong data-translate="Durée">Durée</strong> : 2 <span data-translate="semaines">semaines</span></p>
+            <p><strong data-translate="Contexte">Contexte</strong> : <span data-translate="Projet personnel pour approfondir Java">Projet personnel pour approfondir Java</span></p>
+            <p data-translate="Ce projet m'a permis de travailler en autonomie complète.">Ce projet m'a permis de travailler en autonomie complète.</p>
+          </div>
+
+          <div class="project-section">
+            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
+            <div class="tech-stack">
+              <span class="tech-item">Java</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
