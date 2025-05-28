@@ -1,408 +1,772 @@
-// Attendre que le DOM soit chargé
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // === NAVIGATION ===
-  
-  // Sélection des éléments de navigation
-  const hamburger = document.getElementById('hamburger');
-  const navbar = document.getElementById('navbar');
-  const navLinks = document.querySelectorAll('.nav-link');
-  
-  // Toggle du menu hamburger
-  if (hamburger && navbar) {
-    hamburger.addEventListener('click', function() {
-      navbar.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    });
+// ===== PORTFOLIO JAVASCRIPT MANAGER =====
+// Gestionnaire principal pour toutes les fonctionnalités interactives
+
+class PortfolioManager {
+  constructor() {
+    this.init();
   }
-  
-  // Fermer le menu mobile lors du clic sur un lien
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      navbar.classList.remove('active');
-      hamburger.classList.remove('active');
-    });
-  });
-  
-  // Navigation active en fonction du scroll
-  function updateActiveNav() {
-    const sections = document.querySelectorAll('section[id]');
-    const scrollPos = window.scrollY + 100;
+
+  init() {
+    // Attendre que le DOM soit chargé
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.setupComponents();
+      });
+    } else {
+      this.setupComponents();
+    }
+  }
+
+  setupComponents() {
+    this.setupModals();
+    this.setupNavigation();
+    this.setupTypewriter();
+    this.setupScrollAnimations();
+    this.setupThemeEffects();
+    this.setupContactHandling();
+    this.setupPerformanceOptimizations();
     
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute('id');
-      const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
-      
-      if (scrollPos >= top && scrollPos < top + height) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        if (navLink) {
-          navLink.classList.add('active');
+    console.log('🚀 Portfolio Manager initialisé avec succès');
+  }
+
+  // ===== SYSTÈME DE MODALES =====
+  setupModals() {
+    this.modals = new Map();
+    this.projectData = this.getProjectData();
+    
+    // Créer les modales pour chaque projet
+    this.createProjectModals();
+    
+    // Event listeners pour ouvrir les modales
+    document.addEventListener('click', (e) => {
+      const projectCard = e.target.closest('.project-card');
+      if (projectCard) {
+        const projectId = projectCard.dataset.project;
+        if (projectId) {
+          this.openModal(projectId);
         }
+      }
+      
+      // Fermer les modales
+      if (e.target.classList.contains('modal-overlay') || 
+          e.target.classList.contains('modal-close') ||
+          e.target.closest('.modal-close')) {
+        this.closeAllModals();
+      }
+    });
+
+    // Fermer avec Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeAllModals();
       }
     });
   }
-  
-  // Écouter le scroll pour la navigation active
-  window.addEventListener('scroll', updateActiveNav);
-  
-  // === EFFET TYPEWRITER ===
-  
-  const typewriterElement = document.querySelector('.typewriter');
-  if (typewriterElement) {
+
+  createProjectModals() {
+    // Conteneur pour toutes les modales
+    const modalContainer = document.createElement('div');
+    modalContainer.id = 'modal-container';
+    document.body.appendChild(modalContainer);
+
+    // Créer une modale pour chaque projet
+    Object.entries(this.projectData).forEach(([id, project]) => {
+      const modal = this.createModalHTML(id, project);
+      modalContainer.appendChild(modal);
+      this.modals.set(id, modal);
+    });
+  }
+
+  createModalHTML(id, project) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = `modal-${id}`;
+    modal.style.display = 'none';
+    
+    modal.innerHTML = `
+      <div class="modal-overlay"></div>
+      <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="modal-header">
+          <h2>${project.title}</h2>
+          <button class="modal-close" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="project-detail-grid">
+            <div class="detail-main">
+              <h3>Description du projet</h3>
+              <p>${project.description}</p>
+              
+              <h3>Fonctionnalités principales</h3>
+              <ul>
+                ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+              </ul>
+              
+              <h3>Défis techniques</h3>
+              <p>${project.challenges}</p>
+              
+              <h3>Résultats</h3>
+              <p>${project.results}</p>
+            </div>
+            
+            <div class="detail-sidebar">
+              <div class="detail-card">
+                <h4>Informations</h4>
+                <p><strong>Durée:</strong> ${project.duration}</p>
+                <p><strong>Statut:</strong> ${project.status}</p>
+                <p><strong>Type:</strong> ${project.type}</p>
+              </div>
+              
+              <div class="detail-card">
+                <h4>Technologies utilisées</h4>
+                <div class="tech-stack">
+                  ${project.technologies.map(tech => `<span>${tech}</span>`).join('')}
+                </div>
+              </div>
+              
+              ${project.github ? `
+                <div class="detail-card">
+                  <a href="${project.github}" class="btn-github" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i>
+                    Voir sur GitHub
+                  </a>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    return modal;
+  }
+
+  openModal(projectId) {
+    const modal = this.modals.get(projectId);
+    if (!modal) return;
+
+    // Désactiver le scroll du body
+    document.body.style.overflow = 'hidden';
+    
+    // Afficher la modale avec animation
+    modal.style.display = 'flex';
+    modal.style.animation = 'modalFadeIn 0.3s ease-out';
+    
+    // Focus sur le bouton de fermeture pour l'accessibilité
+    setTimeout(() => {
+      const closeBtn = modal.querySelector('.modal-close');
+      closeBtn?.focus();
+    }, 100);
+    
+    // Trace pour analytics (optionnel)
+    this.trackEvent('modal_open', { project: projectId });
+  }
+
+  closeAllModals() {
+    this.modals.forEach(modal => {
+      modal.style.display = 'none';
+    });
+    
+    // Réactiver le scroll du body
+    document.body.style.overflow = '';
+  }
+
+  // ===== NAVIGATION DYNAMIQUE =====
+  setupNavigation() {
+    this.currentSection = 'accueil';
+    this.setupDynamicIsland();
+    this.setupSmoothScrolling();
+    this.setupScrollSpy();
+  }
+
+  setupDynamicIsland() {
+    const island = document.querySelector('.dynamic-island');
+    if (!island) return;
+
+    // État initial
+    let isExpanded = false;
+    
+    // Expansion au hover
+    island.addEventListener('mouseenter', () => {
+      if (!isExpanded) {
+        this.expandIsland();
+        isExpanded = true;
+      }
+    });
+
+    // Contraction en quittant
+    island.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        if (isExpanded) {
+          this.contractIsland();
+          isExpanded = false;
+        }
+      }, 1000);
+    });
+
+    // Navigation par clic
+    island.addEventListener('click', (e) => {
+      const navDot = e.target.closest('.nav-dot');
+      if (navDot) {
+        e.preventDefault();
+        const target = navDot.getAttribute('href');
+        this.scrollToSection(target);
+      }
+    });
+  }
+
+  expandIsland() {
+    const navDots = document.querySelectorAll('.nav-dot span');
+    navDots.forEach((span, index) => {
+      setTimeout(() => {
+        span.style.opacity = '1';
+        span.style.width = 'auto';
+      }, index * 50);
+    });
+  }
+
+  contractIsland() {
+    const navDots = document.querySelectorAll('.nav-dot span');
+    navDots.forEach(span => {
+      span.style.opacity = '0';
+      span.style.width = '0';
+    });
+  }
+
+  setupSmoothScrolling() {
+    // Améliorer le smooth scroll natif
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = anchor.getAttribute('href');
+        this.scrollToSection(target);
+      });
+    });
+  }
+
+  scrollToSection(target) {
+    const element = document.querySelector(target);
+    if (!element) return;
+
+    const offsetTop = element.offsetTop - 100; // Compensation pour la nav
+    
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    });
+
+    // Mettre à jour l'état actif
+    this.updateActiveNavigation(target.substring(1));
+  }
+
+  setupScrollSpy() {
+    const sections = document.querySelectorAll('section[id]');
+    const navDots = document.querySelectorAll('.nav-dot');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.updateActiveNavigation(entry.target.id);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '-20% 0px -20% 0px'
+    });
+
+    sections.forEach(section => observer.observe(section));
+  }
+
+  updateActiveNavigation(sectionId) {
+    if (this.currentSection === sectionId) return;
+    
+    this.currentSection = sectionId;
+    
+    // Retirer les classes actives
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.classList.remove('active');
+    });
+    
+    // Ajouter la classe active
+    const activeDot = document.querySelector(`[href="#${sectionId}"]`);
+    if (activeDot) {
+      activeDot.classList.add('active');
+    }
+  }
+
+  // ===== EFFET TYPEWRITER =====
+  setupTypewriter() {
+    const element = document.querySelector('.typewriter');
+    if (!element) return;
+
     const texts = [
-      'Développeur Junior',
-      'Étudiant en Informatique',
-      'Amateur de jeux vidéos',
-      'Shrek is life'
+      'Développeur Web',
+      'Créateur Digital',
+      'Problem Solver',
+      'Code Artisan'
     ];
     
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typeSpeed = 100;
-    
-    function typeWriter() {
-      const currentText = texts[textIndex];
+    let currentText = '';
+
+    const typeSpeed = 100;
+    const deleteSpeed = 50;
+    const pauseTime = 2000;
+
+    const type = () => {
+      const fullText = texts[textIndex];
       
-      if (isDeleting) {
-        typewriterElement.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-        typeSpeed = 50;
-      } else {
-        typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+      if (!isDeleting) {
+        currentText = fullText.substring(0, charIndex + 1);
         charIndex++;
-        typeSpeed = 100;
-      }
-      
-      if (!isDeleting && charIndex === currentText.length) {
-        typeSpeed = 2000; // Pause à la fin
-        isDeleting = true;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % texts.length;
-        typeSpeed = 500; // Pause avant le nouveau texte
-      }
-      
-      setTimeout(typeWriter, typeSpeed);
-    }
-    
-    // Commencer l'animation typewriter
-    typeWriter();
-  }
-  
-  // === ANIMATIONS DES BARRES DE COMPÉTENCES ===
-  
-  function animateSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    skillBars.forEach(bar => {
-      const width = bar.getAttribute('data-width');
-      if (width) {
-        bar.style.setProperty('--target-width', width);
-        bar.style.width = width;
-        bar.classList.add('animate');
-      }
-    });
-  }
-  
-  // Observer pour les animations au scroll
-  const observerOptions = {
-    threshold: 0.3,
-    rootMargin: '0px 0px -50px 0px'
-  };
-  
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('fade-in');
         
-        // Animer les barres de compétences quand la section à propos est visible
-        if (entry.target.id === 'about') {
-          setTimeout(animateSkillBars, 500);
+        if (charIndex === fullText.length) {
+          setTimeout(() => { isDeleting = true; }, pauseTime);
+        }
+      } else {
+        currentText = fullText.substring(0, charIndex - 1);
+        charIndex--;
+        
+        if (charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
         }
       }
-    });
-  }, observerOptions);
-  
-  // Observer toutes les sections
-  const sections = document.querySelectorAll('section, .about-card, .skills-card, .project-card');
-  sections.forEach(section => {
-    observer.observe(section);
-  });
-  
-  // === MODALES DE PROJETS ===
-  
-  // Fonction pour ouvrir une modale
-  window.openProjectModal = function(projectId) {
-    const modal = document.getElementById(`modal-${projectId}`);
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Empêcher le scroll de la page
       
-      // Animation d'entrée
-      setTimeout(() => {
-        modal.querySelector('.modal-content').style.transform = 'scale(1)';
-        modal.querySelector('.modal-content').style.opacity = '1';
-      }, 10);
-    }
-  };
-  
-  // Fonction pour fermer une modale
-  window.closeProjectModal = function(projectId) {
-    const modal = document.getElementById(`modal-${projectId}`);
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Rétablir le scroll
-    }
-  };
-  
-  // Fermer les modales en cliquant sur le background
-  const modals = document.querySelectorAll('.modal');
-  modals.forEach(modal => {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        const projectId = modal.id.replace('modal-', '');
-        closeProjectModal(projectId);
+      element.textContent = currentText;
+      
+      const speed = isDeleting ? deleteSpeed : typeSpeed;
+      setTimeout(type, speed);
+    };
+
+    // Démarrer l'animation après un délai
+    setTimeout(type, 1000);
+  }
+
+  // ===== ANIMATIONS AU SCROLL =====
+  setupScrollAnimations() {
+    // Observer pour les animations d'apparition
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Éléments à animer
+    const animatedElements = document.querySelectorAll(`
+      .story-card, .skill-category, .formation-card, .goals-card,
+      .project-card, .contact-card
+    `);
+
+    animatedElements.forEach((el, index) => {
+      // État initial
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+      
+      animationObserver.observe(el);
+    });
+
+    // Parallax subtil pour les cartes flottantes
+    this.setupParallax();
+  }
+
+  setupParallax() {
+    const floatingCards = document.querySelectorAll('.info-card');
+    if (floatingCards.length === 0) return;
+
+    let ticking = false;
+
+    const updateParallax = () => {
+      const scrolled = window.pageYOffset;
+      
+      floatingCards.forEach((card, index) => {
+        const rate = scrolled * -0.5 * (index + 1);
+        card.style.transform = `translateY(${rate}px)`;
+      });
+      
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
       }
     });
-  });
-  
-  // Fermer les modales avec la touche Échap
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      modals.forEach(modal => {
-        if (modal.style.display === 'flex') {
-          const projectId = modal.id.replace('modal-', '');
-          closeProjectModal(projectId);
+  }
+
+  // ===== EFFETS THÉMATIQUES =====
+  setupThemeEffects() {
+    this.setupCursorEffect();
+    this.setupHoverEffects();
+    this.setupColorTransitions();
+  }
+
+  setupCursorEffect() {
+    // Créer un curseur personnalisé subtil
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    cursor.style.cssText = `
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: scale 0.2s ease;
+      display: none;
+    `;
+    document.body.appendChild(cursor);
+
+    // Suivre la souris sur desktop seulement
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      cursor.style.display = 'block';
+      
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+
+      // Agrandir sur les éléments interactifs
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.matches('a, button, .project-card, .contact-card')) {
+          cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+        }
+      });
+
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.matches('a, button, .project-card, .contact-card')) {
+          cursor.style.transform = 'translate(-50%, -50%) scale(1)';
         }
       });
     }
-  });
-  
-  // === FORMULAIRE DE CONTACT ===
-  
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Récupérer les données du formulaire
-      const formData = new FormData(contactForm);
-      const name = formData.get('name');
-      const email = formData.get('email');
-      const subject = formData.get('subject');
-      const message = formData.get('message');
-      
-      // Validation simple
-      if (!name || !email || !message) {
-        showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
-        return;
-      }
-      
-      if (!isValidEmail(email)) {
-        showNotification('Veuillez entrer une adresse email valide.', 'error');
-        return;
-      }
-      
-      // Simuler l'envoi (dans un vrai projet, vous enverriez à un serveur)
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      
-      submitBtn.textContent = 'Envoi en cours...';
-      submitBtn.disabled = true;
-      
-      setTimeout(() => {
-        showNotification('Message envoyé avec succès ! Je vous répondrai bientôt.', 'success');
-        contactForm.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }, 2000);
-    });
   }
-  
-  // Fonction de validation email
-  function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-  
-  // === SYSTÈME DE NOTIFICATIONS ===
-  
-  function showNotification(message, type = 'info') {
-    // Créer l'élément de notification
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-      <div class="notification-content">
-        <span class="notification-message">${message}</span>
-        <button class="notification-close">&times;</button>
-      </div>
-    `;
-    
-    // Ajouter les styles CSS si pas déjà présents
-    if (!document.querySelector('#notification-styles')) {
-      const styles = document.createElement('style');
-      styles.id = 'notification-styles';
-      styles.textContent = `
-        .notification {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          max-width: 400px;
-          padding: 1rem;
-          border-radius: 0.5rem;
-          box-shadow: var(--shadow-lg);
-          z-index: 3000;
-          transform: translateX(100%);
-          transition: transform 0.3s ease-out;
-        }
-        .notification-success {
-          background-color: #10b981;
-          color: white;
-        }
-        .notification-error {
-          background-color: #ef4444;
-          color: white;
-        }
-        .notification-info {
-          background-color: var(--accent);
-          color: white;
-        }
-        .notification-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-        }
-        .notification-close {
-          background: none;
-          border: none;
-          color: inherit;
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: 0;
-          width: 24px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      `;
-      document.head.appendChild(styles);
-    }
-    
-    // Ajouter au DOM
-    document.body.appendChild(notification);
-    
-    // Animer l'entrée
-    setTimeout(() => {
-      notification.style.transform = 'translateX(0)';
-    }, 10);
-    
-    // Fonction pour fermer la notification
-    function closeNotification() {
-      notification.style.transform = 'translateX(100%)';
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.parentNode.removeChild(notification);
-        }
-      }, 300);
-    }
-    
-    // Fermer automatiquement après 5 secondes
-    setTimeout(closeNotification, 5000);
-    
-    // Fermer au clic sur le bouton de fermeture
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', closeNotification);
-  }
-  
-  // === SMOOTH SCROLL POUR LES LIENS D'ANCRAGE ===
-  
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const targetPosition = target.offsetTop - headerHeight - 20;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-  
-  // === HEADER SCROLL EFFECT ===
-  
-  const header = document.querySelector('header');
-  let lastScrollY = window.scrollY;
-  
-  window.addEventListener('scroll', function() {
-    if (header) {
-      if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.backdropFilter = 'blur(20px)';
-        header.style.boxShadow = 'var(--shadow-sm)';
-      } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.backdropFilter = 'blur(10px)';
-        header.style.boxShadow = 'none';
-      }
-    }
-    
-    lastScrollY = window.scrollY;
-  });
-  
-  // === ANIMATION D'APPARITION PROGRESSIVE ===
-  
-  // Ajouter la classe fade-in aux éléments quand ils deviennent visibles
-  const fadeElements = document.querySelectorAll('.about-card, .skills-card, .project-card, .contact-method');
-  
-  const fadeObserver = new IntersectionObserver(function(entries) {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, index * 100); // Délai progressif pour chaque élément
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-  
-  // Préparer les éléments pour l'animation
-  fadeElements.forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(30px)';
-    element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-    fadeObserver.observe(element);
-  });
-  
-  // === GESTION DU REDIMENSIONNEMENT ===
-  
-  window.addEventListener('resize', function() {
-    // Fermer le menu mobile si on agrandit l'écran
-    if (window.innerWidth > 768) {
-      navbar.classList.remove('active');
-      hamburger.classList.remove('active');
-    }
-  });
-  
-  // === INITIALISATION ===
-  
-  // Mettre à jour la navigation active au chargement
-  updateActiveNav();
-  
-  // Initialiser les gestionnaires de thème et de langue
-  new ThemeManager();
-  new LanguageManager();
 
-  console.log('Portfolio JavaScript chargé avec succès ! 🚀');
-});
+  setupHoverEffects() {
+    // Effet de brillance sur les cartes
+    document.querySelectorAll('.project-card, .story-card, .contact-card').forEach(card => {
+      card.addEventListener('mouseenter', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        card.style.setProperty('--mouse-x', x + 'px');
+        card.style.setProperty('--mouse-y', y + 'px');
+      });
+    });
+  }
+
+  setupColorTransitions() {
+    // Transition des couleurs d'accent basée sur le scroll
+    let ticking = false;
+    
+    const updateColors = () => {
+      const scrollPercent = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
+      const hue = 260 + (scrollPercent * 60); // De violet à cyan
+      
+      document.documentElement.style.setProperty('--dynamic-hue', hue);
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateColors);
+        ticking = true;
+      }
+    });
+  }
+
+  // ===== GESTION DES CONTACTS =====
+  setupContactHandling() {
+    // Copier l'email au clic
+    const emailCard = document.querySelector('[href^="mailto:"]');
+    if (emailCard) {
+      emailCard.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = emailCard.href.replace('mailto:', '');
+        this.copyToClipboard(email);
+        this.showToast('Email copié dans le presse-papiers !');
+      });
+    }
+
+    // Tracking des clics sur les liens sociaux
+    document.querySelectorAll('.contact-card, .footer-social a').forEach(link => {
+      link.addEventListener('click', () => {
+        const platform = this.detectPlatform(link.href);
+        this.trackEvent('contact_click', { platform });
+      });
+    });
+  }
+
+  copyToClipboard(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+    } else {
+      // Fallback pour les navigateurs plus anciens
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
+  }
+
+  showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      z-index: 10001;
+      transform: translateY(100px);
+      transition: transform 0.3s ease;
+      box-shadow: var(--shadow-medium);
+    `;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // Animation d'apparition
+    setTimeout(() => {
+      toast.style.transform = 'translateY(0)';
+    }, 100);
+    
+    // Animation de disparition
+    setTimeout(() => {
+      toast.style.transform = 'translateY(100px)';
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 300);
+    }, 3000);
+  }
+
+  detectPlatform(href) {
+    if (href.includes('linkedin')) return 'linkedin';
+    if (href.includes('github')) return 'github';
+    if (href.includes('mailto')) return 'email';
+    if (href.includes('tel')) return 'phone';
+    return 'other';
+  }
+
+  // ===== OPTIMISATIONS PERFORMANCE =====
+  setupPerformanceOptimizations() {
+    // Lazy loading des images
+    this.setupLazyLoading();
+    
+    // Préchargement des ressources critiques
+    this.preloadCriticalResources();
+    
+    // Débounce du redimensionnement
+    this.setupResponsiveHandling();
+  }
+
+  setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            imageObserver.unobserve(img);
+          }
+        });
+      });
+
+      images.forEach(img => imageObserver.observe(img));
+    } else {
+      // Fallback pour les navigateurs sans IntersectionObserver
+      images.forEach(img => {
+        img.src = img.dataset.src;
+      });
+    }
+  }
+
+  preloadCriticalResources() {
+    const criticalImages = [
+      // Ajouter ici les images critiques à précharger
+    ];
+
+    criticalImages.forEach(src => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      document.head.appendChild(link);
+    });
+  }
+
+  setupResponsiveHandling() {
+    let resizeTimer;
+    
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        this.handleResize();
+      }, 250);
+    });
+  }
+
+  handleResize() {
+    // Réajuster les animations basées sur la taille d'écran
+    const isMobile = window.innerWidth < 768;
+    
+    if (isMobile) {
+      // Désactiver certaines animations sur mobile pour les performances
+      document.body.classList.add('mobile-optimized');
+    } else {
+      document.body.classList.remove('mobile-optimized');
+    }
+  }
+
+  // ===== DONNÉES DES PROJETS =====
+  getProjectData() {
+    return {
+      'projet1': {
+        title: 'Application E-commerce',
+        description: 'Une plateforme e-commerce moderne développée avec React et Node.js, offrant une expérience utilisateur exceptionnelle avec des fonctionnalités avancées de panier, paiement sécurisé et gestion des commandes.',
+        features: [
+          'Interface utilisateur responsive et intuitive',
+          'Système de panier avancé avec persistance',
+          'Intégration de paiements sécurisés (Stripe)',
+          'Panel d\'administration complet',
+          'Système de notifications en temps réel',
+          'Optimisation SEO et performances'
+        ],
+        challenges: 'Les principaux défis incluaient l\'optimisation des performances pour gérer un grand catalogue de produits, l\'implémentation d\'un système de recherche avancé, et l\'intégration sécurisée des paiements.',
+        results: 'L\'application supporte maintenant plus de 10 000 produits avec des temps de chargement inférieurs à 2 secondes et un taux de conversion amélioré de 25%.',
+        duration: '3 mois',
+        status: 'En production',
+        type: 'Application web',
+        technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redis', 'AWS'],
+        github: 'https://github.com/username/ecommerce-app'
+      },
+      'projet2': {
+        title: 'Dashboard Analytics',
+        description: 'Un tableau de bord analytique interactif pour visualiser et analyser les données business en temps réel, avec des graphiques dynamiques et des rapports personnalisables.',
+        features: [
+          'Visualisations de données interactives',
+          'Rapports personnalisables et exportables',
+          'Mise à jour des données en temps réel',
+          'Système d\'alertes automatiques',
+          'Interface multi-tenant',
+          'API RESTful complète'
+        ],
+        challenges: 'La gestion des grandes quantités de données en temps réel et la création d\'une interface utilisateur fluide pour des visualisations complexes ont été les principales difficultés.',
+        results: 'Le dashboard traite maintenant plus de 1 million de points de données par jour avec une latence moyenne de 50ms.',
+        duration: '4 mois',
+        status: 'En développement',
+        type: 'Application web',
+        technologies: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL', 'WebSocket', 'Docker'],
+        github: 'https://github.com/username/analytics-dashboard'
+      },
+      'projet3': {
+        title: 'App Mobile Social',
+        description: 'Une application mobile sociale native développée avec React Native, permettant aux utilisateurs de partager du contenu multimédia et d\'interagir en temps réel.',
+        features: [
+          'Partage de contenu multimédia',
+          'Messagerie instantanée',
+          'Stories éphémères',
+          'Système de likes et commentaires',
+          'Géolocalisation et check-ins',
+          'Notifications push intelligentes'
+        ],
+        challenges: 'L\'optimisation des performances sur différents appareils, la gestion de la synchronisation hors-ligne, et l\'implémentation de fonctionnalités temps réel ont nécessité des solutions innovantes.',
+        results: 'L\'application compte plus de 50 000 utilisateurs actifs avec un taux de rétention de 75% après 30 jours.',
+        duration: '6 mois',
+        status: 'En production',
+        type: 'Application mobile',
+        technologies: ['React Native', 'Firebase', 'Node.js', 'Socket.io', 'Redis', 'AWS S3'],
+        github: 'https://github.com/username/social-mobile-app'
+      }
+    };
+  }
+
+  // ===== UTILITAIRES =====
+  trackEvent(eventName, properties = {}) {
+    // Intégration avec Google Analytics ou autre service d'analytics
+    if (typeof gtag !== 'undefined') {
+      gtag('event', eventName, properties);
+    }
+    
+    console.log(`Event tracked: ${eventName}`, properties);
+  }
+
+  // Méthode pour ajouter dynamiquement des projets
+  addProject(id, projectData) {
+    this.projectData[id] = projectData;
+    const modal = this.createModalHTML(id, projectData);
+    document.getElementById('modal-container').appendChild(modal);
+    this.modals.set(id, modal);
+  }
+
+  // Méthode pour mettre à jour un projet
+  updateProject(id, projectData) {
+    if (this.modals.has(id)) {
+      this.projectData[id] = { ...this.projectData[id], ...projectData };
+      const oldModal = this.modals.get(id);
+      const newModal = this.createModalHTML(id, this.projectData[id]);
+      oldModal.replaceWith(newModal);
+      this.modals.set(id, newModal);
+    }
+  }
+}
+
+// ===== INITIALISATION =====
+// Créer une instance unique du gestionnaire
+const portfolioManager = new PortfolioManager();
+
+// Exposer globalement pour l'accès depuis la console (utile pour le debug)
+window.portfolioManager = portfolioManager;
+
+// ===== CSS SUPPLÉMENTAIRE POUR LES EFFETS JS =====
+const additionalStyles = `
+  .mobile-optimized * {
+    transition-duration: 0.1s !important;
+    animation-duration: 0.1s !important;
+  }
+  
+  .lazy {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .lazy.loaded {
+    opacity: 1;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-optimized * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+`;
+
+// Injecter les styles supplémentaires
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);
+
+console.log('🎨 Portfolio JavaScript chargé avec succès !');

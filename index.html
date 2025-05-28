@@ -8,309 +8,335 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">
-        <h3></h3>
+  <!-- Dynamic Island Navigation -->
+  <nav class="dynamic-island" id="dynamicIsland">
+    <div class="island-content">
+      <div class="nav-items">
+        <a href="#hero" class="nav-dot active" data-section="hero">
+          <i class="fas fa-home"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="#about" class="nav-dot" data-section="about">
+          <i class="fas fa-user"></i>
+          <span>À propos</span>
+        </a>
+        <a href="#projects" class="nav-dot" data-section="projects">
+          <i class="fas fa-code"></i>
+          <span>Projets</span>
+        </a>
+        <a href="#contact" class="nav-dot" data-section="contact">
+          <i class="fas fa-envelope"></i>
+          <span>Contact</span>
+        </a>
       </div>
-      <ul id="navbar">
-        <li><a href="#home" class="nav-link" data-translate="Accueil">Accueil</a></li>
-        <li><a href="#about" class="nav-link" data-translate="À propos">À propos</a></li>
-        <li><a href="#projects" class="nav-link" data-translate="Projets">Projets</a></li>
-        <li><a href="#contact" class="nav-link" data-translate="Contact">Contact</a></li>
-      </ul>
-      
-      
-
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
   <main>
-    <!-- Section Hero -->
-    <section id="home" class="hero-section">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1><span data-translate="Bonjour, je suis">Bonjour, je suis</span> <span class="highlight">Amine</span></h1>
-          <h2 class="typewriter" data-translate="Développeur Junior">Développeur Junior</h2>
-          <p class="hero-description" data-translate="Un jeune développeur passioné par l'informatique.">
-            Un jeune développeur passioné par l'informatique.
-          </p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary" data-translate="Voir mes projets">Voir mes projets</a>
-            <a href="#contact" class="btn btn-secondary" data-translate="Me contacter">Me contacter</a>
+    <!-- Hero Section with Floating Cards -->
+    <section id="hero" class="hero-section">
+      <div class="hero-container">
+        <div class="floating-profile">
+          <div class="profile-bubble">
+            <img src="img/profile.png" alt="Amine Benaziza" class="profile-img">
+            <div class="profile-ring"></div>
           </div>
         </div>
-        <div class="hero-image">
-          <div class="profile-card">
-            <div class="profile-img">
-              <!-- Remplace par ta photo -->
-              <img src="img/profile.png" alt="">
+        
+        <div class="hero-content">
+          <div class="text-reveal">
+            <h1 class="hero-title">
+              <span class="greeting">Salut, moi c'est</span>
+              <span class="name-highlight">Amine</span>
+            </h1>
+            <div class="role-container">
+              <span class="role-prefix">Je suis</span>
+              <span class="typewriter">Développeur Junior</span>
             </div>
-            <div class="profile-info">
-              <h3>Benaziza Amine</h3>
-              <p data-translate="Développeur Web">Développeur Web</p>
-              <div class="social-links">
-                <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/Aminne629" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:aminekx3@gmail.com"><i class="fas fa-envelope"></i></a>
-              </div>
-            </div>
+            <p class="hero-subtitle">
+              Passionné par l'informatique, je crée des expériences web modernes
+            </p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section À propos -->
-    <section id="about" class="section">
-      <div class="container">
-        <h2 class="section-title" data-translate="À propos de moi">À propos de moi</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <div class="about-card">
-              <h3><i class="fas fa-user"></i> <span data-translate="Présentation">Présentation</span></h3>
-              <p><strong data-translate="Nom">Nom</strong> : Benaziza Amine</p>
-              <p><strong data-translate="Âge">Âge</strong> : 18 <span data-translate="ans">ans</span></p>
-              <p><strong data-translate="Localisation">Localisation</strong> : Lyon / Grenoble</p>
-              <p><strong data-translate="Formation">Formation</strong> : BUT <span data-translate="Informatique">Informatique</span></p>
-              <p><strong data-translate="Métier visé">Métier visé</strong> : <span data-translate="Développeur">Développeur</span></p>
-            </div>
-            
-            <div class="about-card">
-              <h3><i class="fas fa-graduation-cap"></i> <span data-translate="Formation">Formation</span></h3>
-              <div class="education-item">
-                <h4>BUT <span data-translate="Informatique">Informatique</span></h4>
-                <p class="education-school" data-translate="IUT Informatique de Grenoble - 1ère année">IUT Informatique de Grenoble - 1ère année</p>
-                <p class="education-desc" data-translate="Une formation très enrichissante avec un personnel très professionnel, qui me forme dans le domaine de l'informatique.">Une formation très enrichissante avec un personnel très professionnel,
-                   qui me forme dans le domaine de l'informatique.</p>
-              </div>
-            </div>
-
-            <div class="about-card">
-              <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
-              <p data-translate="Mon objectif est de devenir un développeur full-stack compétent, capable de créer des applications web performantes et user-friendly.">Mon objectif est de devenir un développeur full-stack compétent, capable de créer des applications web performantes et user-friendly.</p>
-              <p data-translate="J'aimerais aussi créer ma propre entreprise.">J'aimerais aussi créer ma propre entreprise.</p>
-            </div>
-          </div>
-
-          <div class="skills-section">
-            <div class="skills-card">
-              <h3><i class="fas fa-code"></i> <span data-translate="Compétences Techniques">Compétences Techniques</span></h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-name">HTML/CSS</div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-name">JavaScript</div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-name">Java</div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-name">SQL/PostgreSQL</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="skills-card">
-              <h3><i class="fas fa-users"></i> <span data-translate="Compétences Professionnelles">Compétences Professionnelles</span></h3>
-              <div class="soft-skills">
-                <span class="soft-skill" data-translate="Travail en équipe">Travail en équipe</span>
-                <span class="soft-skill" data-translate="Gestion du temps">Gestion du temps</span>
-                <span class="soft-skill" data-translate="Résolution de problèmes">Résolution de problèmes</span>
-                <span class="soft-skill" data-translate="Communication">Communication</span>
-                <span class="soft-skill" data-translate="Autonomie">Autonomie</span>
-                <span class="soft-skill" data-translate="Adaptabilité">Adaptabilité</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Projets -->
-    <section id="projects" class="section">
-      <div class="container">
-        <h2 class="section-title" data-translate="Mes Projets">Mes Projets</h2>
-        <div class="projects-grid">
           
-          <!-- Projet 1 -->
-          <div class="project-card" data-project="project1">
-            <div class="project-image">
-              <i class="fas fa-shopping-cart"></i>
-            </div>
-            <div class="project-content">
-              <h3 data-translate="Site Atos">Site Atos</h3>
-              <p data-translate="Refonte du site de la société Atos.">Refonte du site de la société Atos.</p>
-              <div class="project-tags">
-                <span class="tag">HTML/CSS</span>
-                <span class="tag">JavaScript</span>
-              </div>
-              <button class="btn btn-small" onclick="openProjectModal('project1')" data-translate="Voir détails">Voir détails</button>
-            </div>
+          <div class="hero-actions">
+            <a href="#projects" class="cta-primary">
+              <span>Découvrir mes projets</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#contact" class="cta-secondary">
+              <span>Discutons ensemble</span>
+              <i class="fas fa-comments"></i>
+            </a>
           </div>
+        </div>
 
-          <!-- Projet 2 -->
-          <div class="project-card" data-project="project2">
-            <div class="project-image">
-              <i class="fas fa-tasks"></i>
-            </div>
-            <div class="project-content">
-              <h3 data-translate="Classification automatique de dépèches">Classification automatique de dépèches</h3>
-              <p data-translate="Une intelligence artificielle capable de classer une dépèche dans une catégorie.">Une intelligence artificielle capable de classer une dépèche dans une catégorie.</p>
-              <div class="project-tags">
-                <span class="tag">Java</span>
-              </div>
-              <button class="btn btn-small" onclick="openProjectModal('project2')" data-translate="Voir détails">Voir détails</button>
-            </div>
+        <!-- Floating Info Cards -->
+        <div class="floating-cards">
+          <div class="info-card card-1">
+            <i class="fas fa-graduation-cap"></i>
+            <span>BUT Informatique</span>
           </div>
-
-          <!-- Projet 3 -->
-          <div class="project-card" data-project="project3">
-            <div class="project-image">
-              <i class="fas fa-gamepad"></i>
-            </div>
-            <div class="project-content">
-              <h3 data-translate="Calculatrice">Calculatrice</h3>
-              <p data-translate="Une simple calculatrice que j'ai codé sur mon temps libre.">Une simple calculatrice que j'ai codé sur mon temps libre.</p>
-              <div class="project-tags">
-                <span class="tag">Java</span>
-              </div>
-              <button class="btn btn-small" onclick="openProjectModal('project3')" data-translate="Voir détails">Voir détails</button>
-            </div>
+          <div class="info-card card-2">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Lyon / Grenoble</span>
           </div>
-
+          <div class="info-card card-3">
+            <i class="fas fa-calendar"></i>
+            <span>18 ans</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section Contact -->
-    <section id="contact" class="section">
-      <div class="container">
-        <h2 class="section-title" data-translate="Me Contacter">Me Contacter</h2>
-        <div class="contact-content">
-          <div class="contact-info">
-            <h3 data-translate="Restons en contact !">Restons en contact !</h3>
-            <p data-translate="N'hésitez pas à me contacter pour discuter d'opportunités professionnelles.">N'hésitez pas à me contacter pour discuter d'opportunités professionnelles.</p>
-            
-            <div class="contact-methods">
-              <div class="contact-method">
-                <i class="fas fa-envelope"></i>
-                <div>
-                  <h4>Email</h4>
-                  <a href="mailto:aminekx3@gmail.com">aminekx3@gmail.com</a>
-                </div>
+    <!-- About Section - Cards Mosaic -->
+    <section id="about" class="about-section">
+      <div class="section-header">
+        <h2 class="section-title">À propos de moi</h2>
+        <div class="title-decoration"></div>
+      </div>
+      
+      <div class="about-mosaic">
+        <!-- Main Story Card -->
+        <div class="story-card main-card">
+          <div class="card-header">
+            <i class="fas fa-user-circle"></i>
+            <h3>Mon parcours</h3>
+          </div>
+          <div class="story-content">
+            <p>Étudiant de 18 ans en BUT Informatique à Grenoble, je suis passionné par le développement web et les nouvelles technologies.</p>
+            <p>Mon objectif : devenir développeur full-stack et créer ma propre entreprise.</p>
+          </div>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="skills-mosaic">
+          <div class="skill-category tech-skills">
+            <h4><i class="fas fa-code"></i> Tech Stack</h4>
+            <div class="skill-bubbles">
+              <span class="skill-bubble">HTML/CSS</span>
+              <span class="skill-bubble">JavaScript</span>
+              <span class="skill-bubble">Java</span>
+              <span class="skill-bubble">SQL</span>
+            </div>
+          </div>
+          
+          <div class="skill-category soft-skills">
+            <h4><i class="fas fa-brain"></i> Soft Skills</h4>
+            <div class="skill-list">
+              <div class="skill-item">
+                <i class="fas fa-users"></i>
+                <span>Travail d'équipe</span>
               </div>
-              <div class="contact-method">
-                <i class="fab fa-linkedin"></i>
-                <div>
-                  <h4>LinkedIn</h4>
-                  <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" data-translate="Cliquez pour voir mon LinkedIN.">Cliquez pour voir mon LinkedIN.</a>
-                </div>
+              <div class="skill-item">
+                <i class="fas fa-clock"></i>
+                <span>Gestion du temps</span>
               </div>
-              <div class="contact-method">
-                <i class="fab fa-github"></i>
-                <div>
-                  <h4>GitHub</h4>
-                  <a href="https://github.com/Aminne629" target="_blank" data-translate="Cliquez pour voir mon github.">Cliquez pour voir mon github.</a>
-                </div>
+              <div class="skill-item">
+                <i class="fas fa-lightbulb"></i>
+                <span>Résolution de problèmes</span>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-comments"></i>
+                <span>Communication</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="contact-form-container">
-            <form id="contact-form" class="contact-form">
-              <h3 data-translate="Envoyez-moi un message">Envoyez-moi un message</h3>
-              <div class="form-group">
-                <label for="name" data-translate="Nom *">Nom *</label>
-                <input type="text" id="name" name="name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required>
-              </div>
-              <div class="form-group">
-                <label for="subject" data-translate="Sujet">Sujet</label>
-                <input type="text" id="subject" name="subject">
-              </div>
-              <div class="form-group">
-                <label for="message" data-translate="Message *">Message *</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" data-translate="Envoyer le message">Envoyer le message</button>
-            </form>
+        <!-- Formation Card -->
+        <div class="formation-card">
+          <div class="card-icon">
+            <i class="fas fa-university"></i>
           </div>
+          <div class="formation-content">
+            <h4>Formation actuelle</h4>
+            <p class="formation-title">BUT Informatique</p>
+            <p class="formation-school">IUT de Grenoble - 1ère année</p>
+            <p class="formation-desc">Formation complète avec une équipe pédagogique professionnelle</p>
+          </div>
+        </div>
+
+        <!-- Goals Card -->
+        <div class="goals-card">
+          <div class="goals-header">
+            <i class="fas fa-rocket"></i>
+            <h4>Mes objectifs</h4>
+          </div>
+          <div class="goals-list">
+            <div class="goal-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Devenir développeur full-stack</span>
+            </div>
+            <div class="goal-item">
+              <i class="fas fa-building"></i>
+              <span>Créer ma propre entreprise</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section - Interactive Timeline -->
+    <section id="projects" class="projects-section">
+      <div class="section-header">
+        <h2 class="section-title">Mes Projets</h2>
+        <div class="title-decoration"></div>
+      </div>
+
+      <div class="projects-timeline">
+        <!-- Project 1 -->
+        <div class="project-node" data-project="projet1">
+          <div class="project-connector"></div>
+          <div class="project-card" data-project="projet1">
+            <h3>Application E-commerce</h3>
+            <p>Une plateforme e-commerce moderne développée avec React et Node.js...</p>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-node" data-project="projet2">
+          <div class="project-connector"></div>
+          <div class="project-card" data-project="projet2">
+            <h3>Dashboard Analytics</h3>
+            <p>Un tableau de bord analytique interactif pour visualiser et analyser les données business...</p>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-node" data-project="projet3">
+          <div class="project-connector"></div>
+          <div class="project-card" data-project="projet3">
+            <h3>App Mobile Social</h3>
+            <p>Une application mobile sociale native développée avec React Native...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section - Minimalist Cards -->
+    <section id="contact" class="contact-section">
+      <div class="section-header">
+        <h2 class="section-title">Restons connectés</h2>
+        <div class="title-decoration"></div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-intro">
+          <h3>Discutons de vos projets</h3>
+          <p>N'hésitez pas à me contacter pour discuter d'opportunités professionnelles ou simplement échanger sur l'informatique.</p>
+        </div>
+
+        <div class="contact-methods">
+          <a href="mailto:aminekx3@gmail.com" class="contact-card email-card">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Email</h4>
+              <span>aminekx3@gmail.com</span>
+            </div>
+            <div class="contact-arrow">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" class="contact-card linkedin-card">
+            <div class="contact-icon">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="contact-info">
+              <h4>LinkedIn</h4>
+              <span>Amine Benaziza</span>
+            </div>
+            <div class="contact-arrow">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+          </a>
+
+          <a href="https://github.com/Aminne629" target="_blank" class="contact-card github-card">
+            <div class="contact-icon">
+              <i class="fab fa-github"></i>
+            </div>
+            <div class="contact-info">
+              <h4>GitHub</h4>
+              <span>Aminne629</span>
+            </div>
+            <div class="contact-arrow">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <p data-translate="© 2025 BENAZIZA Amine | Portfolio - Tous droits réservés">© 2025 BENAZIZA Amine | Portfolio - Tous droits réservés</p>
-      <div class="footer-links">
-        <a href="#about" data-translate="À propos">À propos</a>
-        <a href="#projects" data-translate="Projets">Projets</a>
-        <a href="#contact" data-translate="Contact">Contact</a>
+  <!-- Footer minimalist -->
+  <footer class="modern-footer">
+    <div class="footer-content">
+      <p>© 2025 Amine Benaziza - Développeur passionné</p>
+      <div class="footer-social">
+        <a href="https://github.com/Aminne629" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:aminekx3@gmail.com"><i class="fas fa-envelope"></i></a>
       </div>
     </div>
   </footer>
 
-  <!-- Modales pour les projets détaillés -->
+  <!-- Modales pour les projets (structure simplifiée) -->
   
   <!-- Modal Projet 1 -->
   <div class="modal" id="modal-project1">
-    <div class="modal-content project-modal">
-      <span class="close" onclick="closeProjectModal('project1')">&times;</span>
-      <div class="project-detail">
-        <div class="project-header">
-          <h2 data-translate="Site Atos">Site Atos</h2>
-          <div class="project-links">
-            <a href="https://github.com/Ulio05/SAE-5-6" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
-          </div>
-        </div>
-        
-        <div class="project-sections">
-          <div class="project-section">
-            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
-            <p data-translate="J'ai développé avec 2 coéquipiers un site pour la société Atos. Ce site est un site fictif, fait pour un projet scolaire. On y retrouve tout le nécessaire pour se renseigner sur la société Atos. Il est destiné à des collégiens en recherche de stage d'observation, pour leur présenter l'entreprise et les aider à les contacter à l'aide d'une page de contact.">J'ai développé avec 2 coéquipiers un site pour la société Atos. Ce site est un site fictif, fait pour un projet scolaire. On y retrouve tout le nécessaire pour se renseigner sur la société Atos. Il est destiné à des collégiens en recherche de stage d'observation, pour leur présenter l'entreprise et les aider à les contacter à l'aide d'une page de contact.</p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+    <div class="modal-overlay" onclick="closeProjectModal('project1')"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Site Atos</h2>
+        <button class="modal-close" onclick="closeProjectModal('project1')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="project-detail-grid">
+          <div class="detail-main">
+            <h3>Description</h3>
+            <p>Développé en équipe de 3 personnes, ce site fictif présente la société Atos aux collégiens en recherche de stage d'observation. Le projet met l'accent sur la transition écologique de l'entreprise.</p>
+            
+            <h3>Objectifs réalisés</h3>
             <ul>
-              <li data-translate="Présenter la société à de jeunes collégiens">Présenter la société à de jeunes collégiens</li>
-              <li data-translate="Montrer la transition écologique de l'entreprise">Montrer la transition écologique de l'entreprise</li>
-              <li data-translate="Aider les jeunes à contacter l'entreprise pour leur stage">Aider les jeunes à contacter l'entreprise pour leur stage</li>
+              <li>Présentation adaptée aux jeunes collégiens</li>
+              <li>Mise en avant de la transition écologique</li>
+              <li>Interface de contact simplifiée</li>
             </ul>
           </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-users"></i> <span data-translate="Travail en groupe">Travail en groupe</span></h3>
-            <p><strong data-translate="Équipe">Équipe</strong> : 3 <span data-translate="personnes">personnes</span></p>
-            <p><strong data-translate="Durée">Durée</strong> : 6 <span data-translate="semaines">semaines</span></p>
-            <p><strong data-translate="Méthodologie">Méthodologie</strong> : <span data-translate="Agile">Agile</span></p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-user"></i> <span data-translate="Ma contribution">Ma contribution</span></h3>
-            <ul>
-              <li data-translate="Développement du frontend">Développement du frontend</li>
-              <li data-translate="Mise en place du wireframe">Mise en place du wireframe</li>
-              <li data-translate="Test">Test</li>
-            </ul>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
-            <div class="tech-stack">
-              <span class="tech-item">HTML/CSS</span>
-              <span class="tech-item">JavaScript</span>
+          
+          <div class="detail-sidebar">
+            <div class="detail-card">
+              <h4>Équipe & Durée</h4>
+              <p><strong>3 personnes</strong> - 6 semaines</p>
+              <p>Méthodologie Agile</p>
             </div>
+            
+            <div class="detail-card">
+              <h4>Ma contribution</h4>
+              <ul>
+                <li>Développement frontend</li>
+                <li>Wireframing</li>
+                <li>Tests utilisateur</li>
+              </ul>
+            </div>
+            
+            <div class="detail-card">
+              <h4>Technologies</h4>
+              <div class="tech-stack">
+                <span>HTML/CSS</span>
+                <span>JavaScript</span>
+              </div>
+            </div>
+            
+            <a href="https://github.com/Ulio05/SAE-5-6" class="btn-github" target="_blank">
+              <i class="fab fa-github"></i>
+              Voir le code
+            </a>
           </div>
         </div>
       </div>
@@ -319,51 +345,57 @@
 
   <!-- Modal Projet 2 -->
   <div class="modal" id="modal-project2">
-    <div class="modal-content project-modal">
-      <span class="close" onclick="closeProjectModal('project2')">&times;</span>
-      <div class="project-detail">
-        <div class="project-header">
-          <h2 data-translate="Classification automatique de dépèches">Classification automatique de dépèches</h2>
-          <div class="project-links">
-            <a href="https://github.com/Aminne629/sae01-02" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
-          </div>
-        </div>
-        
-        <div class="project-sections">
-          <div class="project-section">
-            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
-            <p data-translate="Nous avons développé une méthode d'apprentissage automatique, sous-domaine de l'intelligence artificielle, qui permet à notre programme de classer une dépêche dans une catégorie en l'entraînant sur des dépêches. Pour chaque catégorie, on obtenait des mots représentatifs qui nous aidaient à déterminer la catégorie de la dépêche que l'algorithme devait classer.">Nous avons développé une méthode d'apprentissage automatique, sous-domaine de l'intelligence artificielle, qui permet à notre programme de classer une dépêche dans une catégorie en l'entraînant sur des dépêches. Pour chaque catégorie, on obtenait des mots représentatifs qui nous aidaient à déterminer la catégorie de la dépêche que l'algorithme devait classer.</p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+    <div class="modal-overlay" onclick="closeProjectModal('project2')"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Classification automatique de dépêches</h2>
+        <button class="modal-close" onclick="closeProjectModal('project2')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="project-detail-grid">
+          <div class="detail-main">
+            <h3>Description</h3>
+            <p>Intelligence artificielle utilisant l'apprentissage automatique pour classifier des dépêches par catégorie. L'algorithme s'entraîne sur un corpus de dépêches et identifie les mots représentatifs de chaque catégorie.</p>
+            
+            <h3>Défis relevés</h3>
             <ul>
-              <li data-translate="Classer des dépèches">Classer des dépèches</li>
-              <li data-translate="Apprendre à gérer les deadlines (temps très limité)">Apprendre à gérer les deadlines (temps très limité)</li>
-              <li data-translate="Coder sans indications au préalable des professeurs.">Coder sans indications au préalable des professeurs.</li>
+              <li>Classification automatique précise</li>
+              <li>Gestion de deadlines serrées (5 jours)</li>
+              <li>Développement sans indications préalables</li>
             </ul>
           </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-users"></i> <span data-translate="Travail en groupe">Travail en groupe</span></h3>
-            <p><strong data-translate="Équipe">Équipe</strong> : 2 <span data-translate="personnes">personnes</span></p>
-            <p><strong data-translate="Durée">Durée</strong> : 5 <span data-translate="jours">jours</span></p>
-            <p><strong data-translate="Méthodologie">Méthodologie</strong> : <span data-translate="Sprint">Sprint</span></p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-user"></i> <span data-translate="Ma contribution">Ma contribution</span></h3>
-            <ul>
-              <li data-translate="Développement de l'algorithme">Développement de l'algorithme</li>
-              <li data-translate="Tests et débogage">Tests et débogage</li>
-            </ul>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
-            <div class="tech-stack">
-              <span class="tech-item">Java</span>
+          
+          <div class="detail-sidebar">
+            <div class="detail-card">
+              <h4>Équipe & Durée</h4>
+              <p><strong>2 personnes</strong> - 5 jours</p>
+              <p>Méthodologie Sprint</p>
             </div>
+            
+            <div class="detail-card">
+              <h4>Ma contribution</h4>
+              <ul>
+                <li>Développement de l'algorithme</li>
+                <li>Tests et débogage</li>
+                <li>Optimisation des performances</li>
+              </ul>
+            </div>
+            
+            <div class="detail-card">
+              <h4>Technologies</h4>
+              <div class="tech-stack">
+                <span>Java</span>
+                <span>Machine Learning</span>
+              </div>
+            </div>
+            
+            <a href="https://github.com/Aminne629/sae01-02" class="btn-github" target="_blank">
+              <i class="fab fa-github"></i>
+              Voir le code
+            </a>
           </div>
         </div>
       </div>
@@ -372,42 +404,53 @@
 
   <!-- Modal Projet 3 -->
   <div class="modal" id="modal-project3">
-    <div class="modal-content project-modal">
-      <span class="close" onclick="closeProjectModal('project3')">&times;</span>
-      <div class="project-detail">
-        <div class="project-header">
-          <h2 data-translate="Calculatrice">Calculatrice</h2>
-          <div class="project-links">
-            <a href="#" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> <span data-translate="Code">Code</span></a>
-            <a href="#" class="btn btn-small" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-translate="Demo">Demo</span></a>
-          </div>
-        </div>
-        
-        <div class="project-sections">
-          <div class="project-section">
-            <h3><i class="fas fa-info-circle"></i> <span data-translate="Description">Description</span></h3>
-            <p data-translate="Calculatrice très simple capable de faire des additions, soustractions, multiplications et divisions. Je l'ai codée sur mon temps libre pour me familiariser avec Java.">Calculatrice très simple capable de faire des additions, soustractions, multiplications et divisions. Je l'ai codée sur mon temps libre pour me familiariser avec Java.</p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-bullseye"></i> <span data-translate="Objectifs">Objectifs</span></h3>
+    <div class="modal-overlay" onclick="closeProjectModal('project3')"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Calculatrice</h2>
+        <button class="modal-close" onclick="closeProjectModal('project3')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="project-detail-grid">
+          <div class="detail-main">
+            <h3>Description</h3>
+            <p>Application de calculatrice simple développée en autonomie complète pendant mon temps libre. Capable d'effectuer les quatre opérations de base : addition, soustraction, multiplication et division.</p>
+            
+            <h3>Apprentissages</h3>
             <ul>
-              <li data-translate="Travailler en autonomie sur un projet">Travailler en autonomie sur un projet</li>
+              <li>Travail en totale autonomie</li>
+              <li>Approfondissement de Java</li>
+              <li>Gestion d'un projet personnel</li>
             </ul>
           </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-user"></i> <span data-translate="Projet individuel">Projet individuel</span></h3>
-            <p><strong data-translate="Durée">Durée</strong> : 2 <span data-translate="semaines">semaines</span></p>
-            <p><strong data-translate="Contexte">Contexte</strong> : <span data-translate="Projet personnel pour approfondir Java">Projet personnel pour approfondir Java</span></p>
-            <p data-translate="Ce projet m'a permis de travailler en autonomie complète.">Ce projet m'a permis de travailler en autonomie complète.</p>
-          </div>
-
-          <div class="project-section">
-            <h3><i class="fas fa-tools"></i> <span data-translate="Technologies utilisées">Technologies utilisées</span></h3>
-            <div class="tech-stack">
-              <span class="tech-item">Java</span>
+          
+          <div class="detail-sidebar">
+            <div class="detail-card">
+              <h4>Projet individuel</h4>
+              <p><strong>Solo</strong> - 2 semaines</p>
+              <p>Projet personnel</p>
             </div>
+            
+            <div class="detail-card">
+              <h4>Contexte</h4>
+              <p>Réalisé pour approfondir mes connaissances en Java et travailler en autonomie complète.</p>
+            </div>
+            
+            <div class="detail-card">
+              <h4>Technologies</h4>
+              <div class="tech-stack">
+                <span>Java</span>
+                <span>Swing UI</span>
+              </div>
+            </div>
+            
+            <a href="#" class="btn-github" target="_blank">
+              <i class="fab fa-github"></i>
+              Voir le code
+            </a>
           </div>
         </div>
       </div>
