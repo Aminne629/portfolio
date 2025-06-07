@@ -98,7 +98,7 @@ class PortfolioManager {
               <h3>Description du projet</h3>
               <p>${project.description}</p>
               
-              <h3>Objectifs réalisés</h3>
+              <h3>Objectifs</h3>
               <ul>
                 ${project.features.map(feature => `<li>${feature}</li>`).join('')}
               </ul>
