@@ -98,16 +98,13 @@ class PortfolioManager {
               <h3>Description du projet</h3>
               <p>${project.description}</p>
               
-              <h3>Fonctionnalités principales</h3>
+              <h3>Objectifs réalisés</h3>
               <ul>
                 ${project.features.map(feature => `<li>${feature}</li>`).join('')}
               </ul>
               
-              <h3>Défis techniques</h3>
+              <h3>Ma contribution</h3>
               <p>${project.challenges}</p>
-              
-              <h3>Résultats</h3>
-              <p>${project.results}</p>
             </div>
             
             <div class="detail-sidebar">
@@ -301,10 +298,8 @@ class PortfolioManager {
     if (!element) return;
 
     const texts = [
-      'Développeur Web',
-      'Créateur Digital',
-      'Problem Solver',
-      'Code Artisan'
+      'étudiant'
+      , 'passioné'
     ];
     
     let textIndex = 0;
@@ -644,61 +639,51 @@ class PortfolioManager {
   getProjectData() {
     return {
       'projet1': {
-        title: 'Application E-commerce',
-        description: 'Une plateforme e-commerce moderne développée avec React et Node.js, offrant une expérience utilisateur exceptionnelle avec des fonctionnalités avancées de panier, paiement sécurisé et gestion des commandes.',
+        title: 'Site Atos',
+        description: 'Développé en équipe de 3 personnes, ce site fictif présente la société Atos aux collégiens en recherche de stage d\'observation. Le projet met l accent sur la transition écologique de lentreprise.',
         features: [
-          'Interface utilisateur responsive et intuitive',
-          'Système de panier avancé avec persistance',
-          'Intégration de paiements sécurisés (Stripe)',
-          'Panel d\'administration complet',
-          'Système de notifications en temps réel',
-          'Optimisation SEO et performances'
+          'Présentation adaptée aux jeunes collégiens',
+          'Mise en avant de la transition écologique',
+          'Interface de contact simplifiée'
         ],
-        challenges: 'Les principaux défis incluaient l\'optimisation des performances pour gérer un grand catalogue de produits, l\'implémentation d\'un système de recherche avancé, et l\'intégration sécurisée des paiements.',
-        results: 'L\'application supporte maintenant plus de 10 000 produits avec des temps de chargement inférieurs à 2 secondes et un taux de conversion amélioré de 25%.',
-        duration: '3 mois',
-        status: 'En production',
-        type: 'Application web',
-        technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redis', 'AWS'],
-        github: 'https://github.com/username/ecommerce-app'
+        challenges: 'Développement frontend, Wire framing et tests utilisateurs du site.',
+        duration: '1 mois',
+        status: 'Finalisé',
+        type: 'Site web',
+        technologies: ['HTML','CSS','JavaScript'],
+        github: 'https://github.com/Ulio05/SAE-5-6'
       },
       'projet2': {
-        title: 'Dashboard Analytics',
-        description: 'Un tableau de bord analytique interactif pour visualiser et analyser les données business en temps réel, avec des graphiques dynamiques et des rapports personnalisables.',
+        title: 'IA de classification',
+        description: 'Intelligence artificielle utilisant l\'apprentissage automatique pour classifier des dépêches par catégorie. L\'algorithme s\'entraîne sur un corpus de dépêches et identifie les mots représentatifs de chaque catégorie.',
         features: [
-          'Visualisations de données interactives',
-          'Rapports personnalisables et exportables',
-          'Mise à jour des données en temps réel',
-          'Système d\'alertes automatiques',
-          'Interface multi-tenant',
-          'API RESTful complète'
+          'Classification automatique précise',
+          'Gestion de deadlines serrées (5 jours)',
+          'Développement sans indications préalables',
+          'Système d\'alertes automatiques'
         ],
-        challenges: 'La gestion des grandes quantités de données en temps réel et la création d\'une interface utilisateur fluide pour des visualisations complexes ont été les principales difficultés.',
+        challenges: 'Développement de l\'algorithme, tests et débogage, et optimisation des performances.',
         results: 'Le dashboard traite maintenant plus de 1 million de points de données par jour avec une latence moyenne de 50ms.',
-        duration: '4 mois',
-        status: 'En développement',
-        type: 'Application web',
-        technologies: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL', 'WebSocket', 'Docker'],
-        github: 'https://github.com/username/analytics-dashboard'
+        duration: '5 jours',
+        status: 'Finalisé',
+        type: 'Projet Java',
+        technologies: ['Java'],
+        github: 'https://github.com/Aminne629/sae01-02'
       },
       'projet3': {
-        title: 'App Mobile Social',
-        description: 'Une application mobile sociale native développée avec React Native, permettant aux utilisateurs de partager du contenu multimédia et d\'interagir en temps réel.',
+        title: 'Calculatrice',
+        description: 'Application de calculatrice simple développée en autonomie complète pendant mon temps libre. Capable d\'effectuer les quatre opérations de base : addition, soustraction, multiplication et division.',
         features: [
-          'Partage de contenu multimédia',
-          'Messagerie instantanée',
-          'Stories éphémères',
-          'Système de likes et commentaires',
-          'Géolocalisation et check-ins',
-          'Notifications push intelligentes'
+          'Travail en totale autonomie',
+          'Approfondissement des connaissances en Java',
+          'Gestion d\'un projet personnel'
         ],
-        challenges: 'L\'optimisation des performances sur différents appareils, la gestion de la synchronisation hors-ligne, et l\'implémentation de fonctionnalités temps réel ont nécessité des solutions innovantes.',
-        results: 'L\'application compte plus de 50 000 utilisateurs actifs avec un taux de rétention de 75% après 30 jours.',
-        duration: '6 mois',
-        status: 'En production',
-        type: 'Application mobile',
-        technologies: ['React Native', 'Firebase', 'Node.js', 'Socket.io', 'Redis', 'AWS S3'],
-        github: 'https://github.com/username/social-mobile-app'
+        challenges: 'Tout',
+        duration: '1 mois',
+        status: 'Finalisé',
+        type: 'Application Java',
+        technologies: ['Java'],
+        github: 'pas de lien GitHub pour ce projet'
       }
     };
   }
