@@ -7,11 +7,8 @@ class PortfolioManager {
   }
 
   init() {
-    // Attendre que le DOM soit chargé
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        this.setupComponents();
-      });
+      document.addEventListener('DOMContentLoaded', () => this.setupComponents());
     } else {
       this.setupComponents();
     }
@@ -25,51 +22,115 @@ class PortfolioManager {
     this.setupThemeEffects();
     this.setupContactHandling();
     this.setupPerformanceOptimizations();
-    
-    console.log('🚀 Portfolio Manager initialisé avec succès');
   }
 
   // ===== SYSTÈME DE MODALES =====
   setupModals() {
     this.modals = new Map();
     this.projectData = this.getProjectData();
-    
-    // Créer les modales pour chaque projet
+
+    // Créer un conteneur unique pour toutes les modales
     this.createProjectModals();
-    
-    // Event listeners pour ouvrir les modales
+    // Créer les détails mobiles pour chaque projet
+    this.createMobileProjectDetails();
+
+    // Gérer l'ouverture/fermeture selon la taille de l'écran
     document.addEventListener('click', (e) => {
       const projectCard = e.target.closest('.project-card');
-      if (projectCard) {
-        const projectId = projectCard.dataset.project;
-        if (projectId) {
-          this.openModal(projectId);
+      if (projectCard && projectCard.dataset.project) {
+        e.preventDefault();
+        const pid = projectCard.dataset.project;
+        // Sur mobile on affiche un détail intégré plutôt qu'une modale
+        if (document.body.classList.contains('mobile-optimized')) {
+          this.toggleMobileDetail(pid);
+        } else {
+          this.openModal(pid);
         }
       }
-      
-      // Fermer les modales
-      if (e.target.classList.contains('modal-overlay') || 
-          e.target.classList.contains('modal-close') ||
-          e.target.closest('.modal-close')) {
+
+      // Fermer les modales (overlay ou bouton close)
+      if (
+        e.target.classList.contains('modal-overlay') ||
+        e.target.classList.contains('modal-close') ||
+        e.target.closest?.('.modal-close')
+      ) {
         this.closeAllModals();
       }
     });
 
-    // Fermer avec Escape
+    // Fermer les modales avec la touche Échap
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        this.closeAllModals();
-      }
+      if (e.key === 'Escape') this.closeAllModals();
     });
   }
 
-  createProjectModals() {
-    // Conteneur pour toutes les modales
-    const modalContainer = document.createElement('div');
-    modalContainer.id = 'modal-container';
-    document.body.appendChild(modalContainer);
+  /**
+   * Génère des blocs de détails pour chaque projet afin de les afficher sur mobile.
+   */
+  createMobileProjectDetails() {
+    const projects = this.projectData;
+    Object.entries(projects).forEach(([id, project]) => {
+      const card = document.querySelector(`.project-card[data-project="${id}"]`);
+      if (!card) return;
+      // Éviter de dupliquer les détails si déjà créés
+      const existing = document.querySelector(`.project-mobile-detail[data-project="${id}"]`);
+      if (existing) return;
+      const detail = document.createElement('div');
+      detail.className = 'project-mobile-detail';
+      detail.setAttribute('data-project', id);
+      detail.style.display = 'none';
+      // Construire le contenu des détails (similaire à la modale, mais plus compact)
+      detail.innerHTML = `
+        <div class="mobile-detail-content">
+          <h4 class="mobile-detail-title">${project.title}</h4>
+          <p class="mobile-detail-description">${project.description}</p>
+          <h5>Objectifs</h5>
+          <ul class="mobile-detail-features">
+            ${project.features.map((f) => `<li>${f}</li>`).join('')}
+          </ul>
+          <h5>Ma contribution</h5>
+          <p class="mobile-detail-contribution">${project.contribution}</p>
+          <div class="mobile-detail-info">
+            <p><strong>Durée :</strong> ${project.duration}</p>
+            <p><strong>Statut :</strong> ${project.status}</p>
+            <p><strong>Type :</strong> ${project.type}</p>
+          </div>
+          <div class="mobile-detail-technologies">
+            ${project.technologies.map((t) => `<span>${t}</span>`).join('')}
+          </div>
+          ${project.github ? `<a href="${project.github}" class="btn-github" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>` : ''}
+        </div>
+      `;
+      // Insérer le détail juste après la carte
+      card.insertAdjacentElement('afterend', detail);
+    });
+  }
 
-    // Créer une modale pour chaque projet
+  /**
+   * Affiche ou masque le détail mobile du projet spécifié. Masque les autres détails si besoin.
+   */
+  toggleMobileDetail(projectId) {
+    // Masquer toutes les autres fiches ouvertes
+    document.querySelectorAll('.project-mobile-detail').forEach((el) => {
+      if (el.getAttribute('data-project') !== projectId) {
+        el.style.display = 'none';
+      }
+    });
+    const target = document.querySelector(`.project-mobile-detail[data-project="${projectId}"]`);
+    if (!target) return;
+    // Bascule l'affichage
+    target.style.display = target.style.display === 'none' || target.style.display === '' ? 'block' : 'none';
+  }
+
+  createProjectModals() {
+    const containerId = 'modal-container';
+    let modalContainer = document.getElementById(containerId);
+    if (!modalContainer) {
+      modalContainer = document.createElement('div');
+      modalContainer.id = containerId;
+      document.body.appendChild(modalContainer);
+    }
+
     Object.entries(this.projectData).forEach(([id, project]) => {
       const modal = this.createModalHTML(id, project);
       modalContainer.appendChild(modal);
@@ -82,12 +143,12 @@ class PortfolioManager {
     modal.className = 'modal';
     modal.id = `modal-${id}`;
     modal.style.display = 'none';
-    
+
     modal.innerHTML = `
-      <div class="modal-overlay"></div>
-      <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+      <div class="modal-overlay" role="button" aria-label="Fermer la fenêtre modale"></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title-${id}">
         <div class="modal-header">
-          <h2>${project.title}</h2>
+          <h2 id="modal-title-${id}">${project.title}</h2>
           <button class="modal-close" aria-label="Fermer">
             <i class="fas fa-times"></i>
           </button>
@@ -95,83 +156,127 @@ class PortfolioManager {
         <div class="modal-body">
           <div class="project-detail-grid">
             <div class="detail-main">
-              <h3>Description du projet</h3>
+              <h3>Description</h3>
               <p>${project.description}</p>
-              
+
               <h3>Objectifs</h3>
               <ul>
-                ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                ${project.features.map((f) => `<li>${f}</li>`).join('')}
               </ul>
-              
+
               <h3>Ma contribution</h3>
-              <p>${project.challenges}</p>
+              <p>${project.contribution}</p>
             </div>
-            
-            <div class="detail-sidebar">
+
+            <aside class="detail-sidebar">
               <div class="detail-card">
                 <h4>Informations</h4>
-                <p><strong>Durée:</strong> ${project.duration}</p>
-                <p><strong>Statut:</strong> ${project.status}</p>
-                <p><strong>Type:</strong> ${project.type}</p>
+                <p><strong>Durée :</strong> ${project.duration}</p>
+                <p><strong>Statut :</strong> ${project.status}</p>
+                <p><strong>Type :</strong> ${project.type}</p>
               </div>
-              
+
               <div class="detail-card">
-                <h4>Technologies utilisées</h4>
+                <h4>Technologies</h4>
                 <div class="tech-stack">
-                  ${project.technologies.map(tech => `<span>${tech}</span>`).join('')}
+                  ${project.technologies.map((t) => `<span>${t}</span>`).join('')}
                 </div>
               </div>
-              
-              ${project.github ? `
+
+              ${
+                project.github
+                  ? `
                 <div class="detail-card">
                   <a href="${project.github}" class="btn-github" target="_blank" rel="noopener">
                     <i class="fab fa-github"></i>
-                    Voir sur GitHub
+                    Voir le code
                   </a>
-                </div>
-              ` : ''}
-            </div>
+                </div>`
+                  : ''
+              }
+            </aside>
           </div>
         </div>
       </div>
     `;
-    
+
     return modal;
   }
 
   openModal(projectId) {
     const modal = this.modals.get(projectId);
     if (!modal) return;
-
-    // Désactiver le scroll du body
-    document.body.style.overflow = 'hidden';
-    
-    // Afficher la modale avec animation
+  
+    this.lockScroll();
+  
     modal.style.display = 'flex';
-    modal.style.animation = 'modalFadeIn 0.3s ease-out';
-    
-    // Focus sur le bouton de fermeture pour l'accessibilité
-    setTimeout(() => {
-      const closeBtn = modal.querySelector('.modal-close');
-      closeBtn?.focus();
-    }, 100);
-    
-    // Trace pour analytics (optionnel)
-    this.trackEvent('modal_open', { project: projectId });
+    modal.style.animation = 'modalFadeIn 0.25s ease-out';
+    setTimeout(() => modal.querySelector('.modal-close')?.focus(), 100);
+  }
+  
+  closeAllModals() {
+    this.modals.forEach((modal) => (modal.style.display = 'none'));
+    this.unlockScroll();
   }
 
-  closeAllModals() {
-    this.modals.forEach(modal => {
-      modal.style.display = 'none';
-    });
-    
-    // Réactiver le scroll du body
-    document.body.style.overflow = '';
+  lockScroll() {
+    if (this._scrollLockCount == null) this._scrollLockCount = 0;
+    if (this._scrollY == null) this._scrollY = 0;
+  
+    if (this._scrollLockCount === 0) {
+      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      this._scrollY = y;
+  
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${y}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+  
+      document.body.classList.add('modal-open');
+      document.documentElement.classList.add('modal-open');
+    }
+    this._scrollLockCount++;
   }
+  
+  unlockScroll() {
+    if (this._scrollLockCount == null) return;
+    if (this._scrollLockCount > 0) this._scrollLockCount--;
+  
+    if (this._scrollLockCount === 0) {
+      const y = this._scrollY || 0;
+  
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+  
+      document.body.classList.remove('modal-open');
+      document.documentElement.classList.remove('modal-open');
+  
+      // Neutralise temporairement le smooth-scroll pour la restauration
+      const root = document.documentElement;
+      const prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+  
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y);
+        requestAnimationFrame(() => {
+          root.style.scrollBehavior = prev || '';
+        });
+      });
+    }
+  }
+  
+  
+  
+  
+  
 
   // ===== NAVIGATION DYNAMIQUE =====
   setupNavigation() {
-    this.currentSection = 'accueil';
+    this.currentSection = 'hero';
     this.setupDynamicIsland();
     this.setupSmoothScrolling();
     this.setupScrollSpy();
@@ -181,10 +286,8 @@ class PortfolioManager {
     const island = document.querySelector('.dynamic-island');
     if (!island) return;
 
-    // État initial
     let isExpanded = false;
-    
-    // Expansion au hover
+
     island.addEventListener('mouseenter', () => {
       if (!isExpanded) {
         this.expandIsland();
@@ -192,17 +295,15 @@ class PortfolioManager {
       }
     });
 
-    // Contraction en quittant
     island.addEventListener('mouseleave', () => {
       setTimeout(() => {
         if (isExpanded) {
           this.contractIsland();
           isExpanded = false;
         }
-      }, 1000);
+      }, 800);
     });
 
-    // Navigation par clic
     island.addEventListener('click', (e) => {
       const navDot = e.target.closest('.nav-dot');
       if (navDot) {
@@ -214,26 +315,23 @@ class PortfolioManager {
   }
 
   expandIsland() {
-    const navDots = document.querySelectorAll('.nav-dot span');
-    navDots.forEach((span, index) => {
+    document.querySelectorAll('.nav-dot span').forEach((span, index) => {
       setTimeout(() => {
         span.style.opacity = '1';
         span.style.width = 'auto';
-      }, index * 50);
+      }, index * 40);
     });
   }
 
   contractIsland() {
-    const navDots = document.querySelectorAll('.nav-dot span');
-    navDots.forEach(span => {
+    document.querySelectorAll('.nav-dot span').forEach((span) => {
       span.style.opacity = '0';
       span.style.width = '0';
     });
   }
 
   setupSmoothScrolling() {
-    // Améliorer le smooth scroll natif
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', (e) => {
         e.preventDefault();
         const target = anchor.getAttribute('href');
@@ -245,51 +343,29 @@ class PortfolioManager {
   scrollToSection(target) {
     const element = document.querySelector(target);
     if (!element) return;
-
-    const offsetTop = element.offsetTop - 100; // Compensation pour la nav
-    
-    window.scrollTo({
-      top: offsetTop,
-      behavior: 'smooth'
-    });
-
-    // Mettre à jour l'état actif
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     this.updateActiveNavigation(target.substring(1));
   }
 
   setupScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
-    const navDots = document.querySelectorAll('.nav-dot');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.updateActiveNavigation(entry.target.id);
-        }
-      });
-    }, {
-      threshold: 0.3,
-      rootMargin: '-20% 0px -20% 0px'
-    });
-
-    sections.forEach(section => observer.observe(section));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) this.updateActiveNavigation(entry.target.id);
+        });
+      },
+      { threshold: 0.3, rootMargin: '-20% 0px -20% 0px' }
+    );
+    sections.forEach((s) => observer.observe(s));
   }
 
   updateActiveNavigation(sectionId) {
     if (this.currentSection === sectionId) return;
-    
     this.currentSection = sectionId;
-    
-    // Retirer les classes actives
-    document.querySelectorAll('.nav-dot').forEach(dot => {
-      dot.classList.remove('active');
-    });
-    
-    // Ajouter la classe active
+    document.querySelectorAll('.nav-dot').forEach((d) => d.classList.remove('active'));
     const activeDot = document.querySelector(`[href="#${sectionId}"]`);
-    if (activeDot) {
-      activeDot.classList.add('active');
-    }
+    if (activeDot) activeDot.classList.add('active');
   }
 
   // ===== EFFET TYPEWRITER =====
@@ -297,106 +373,60 @@ class PortfolioManager {
     const element = document.querySelector('.typewriter');
     if (!element) return;
 
-    const texts = [
-      'étudiant'
-      , 'passioné'
-    ];
-    
+    const texts = ['développeur', 'étudiant', 'passionné'];
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let currentText = '';
 
-    const typeSpeed = 100;
-    const deleteSpeed = 50;
-    const pauseTime = 2000;
+    const typeSpeed = 90;
+    const deleteSpeed = 45;
+    const pauseTime = 1400;
 
     const type = () => {
       const fullText = texts[textIndex];
-      
+
       if (!isDeleting) {
-        currentText = fullText.substring(0, charIndex + 1);
         charIndex++;
-        
-        if (charIndex === fullText.length) {
-          setTimeout(() => { isDeleting = true; }, pauseTime);
-        }
+        if (charIndex === fullText.length) setTimeout(() => (isDeleting = true), pauseTime);
       } else {
-        currentText = fullText.substring(0, charIndex - 1);
         charIndex--;
-        
         if (charIndex === 0) {
           isDeleting = false;
           textIndex = (textIndex + 1) % texts.length;
         }
       }
-      
-      element.textContent = currentText;
-      
-      const speed = isDeleting ? deleteSpeed : typeSpeed;
-      setTimeout(type, speed);
+
+      element.textContent = fullText.substring(0, charIndex);
+      setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
     };
 
-    // Démarrer l'animation après un délai
-    setTimeout(type, 1000);
+    setTimeout(type, 600);
   }
 
   // ===== ANIMATIONS AU SCROLL =====
   setupScrollAnimations() {
-    // Observer pour les animations d'apparition
-    const animationObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
+    const animationObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
 
-    // Éléments à animer
-    const animatedElements = document.querySelectorAll(`
-      .story-card, .skill-category, .formation-card, .goals-card,
-      .project-card, .contact-card
-    `);
+    const animatedElements = document.querySelectorAll(
+      `.story-card, .skill-category, .formation-card, .goals-card,
+       .project-card, .contact-card, .stack-card`
+    );
 
     animatedElements.forEach((el, index) => {
-      // État initial
       el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-      
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = `opacity 0.6s ease ${index * 0.06}s, transform 0.6s ease ${index * 0.06}s`;
       animationObserver.observe(el);
-    });
-
-    // Parallax subtil pour les cartes flottantes
-    this.setupParallax();
-  }
-
-  setupParallax() {
-    const floatingCards = document.querySelectorAll('.info-card');
-    if (floatingCards.length === 0) return;
-
-    let ticking = false;
-
-    const updateParallax = () => {
-      const scrolled = window.pageYOffset;
-      
-      floatingCards.forEach((card, index) => {
-        const rate = scrolled * -0.5 * (index + 1);
-        card.style.transform = `translateY(${rate}px)`;
-      });
-      
-      ticking = false;
-    };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
     });
   }
 
@@ -408,39 +438,27 @@ class PortfolioManager {
   }
 
   setupCursorEffect() {
-    // Créer un curseur personnalisé subtil
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
     cursor.style.cssText = `
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: scale 0.2s ease;
-      display: none;
+      position: fixed; width: 20px; height: 20px;
+      background: radial-gradient(circle, rgba(124,58,237,.3), transparent);
+      border-radius: 50%; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%); transition: scale .2s ease; display: none;
     `;
     document.body.appendChild(cursor);
 
-    // Suivre la souris sur desktop seulement
     if (window.matchMedia('(min-width: 1024px)').matches) {
       cursor.style.display = 'block';
-      
       document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
       });
-
-      // Agrandir sur les éléments interactifs
       document.addEventListener('mouseover', (e) => {
         if (e.target.matches('a, button, .project-card, .contact-card')) {
           cursor.style.transform = 'translate(-50%, -50%) scale(2)';
         }
       });
-
       document.addEventListener('mouseout', (e) => {
         if (e.target.matches('a, button, .project-card, .contact-card')) {
           cursor.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -450,13 +468,11 @@ class PortfolioManager {
   }
 
   setupHoverEffects() {
-    // Effet de brillance sur les cartes
-    document.querySelectorAll('.project-card, .story-card, .contact-card').forEach(card => {
-      card.addEventListener('mouseenter', (e) => {
+    document.querySelectorAll('.project-card, .story-card, .contact-card, .stack-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
         card.style.setProperty('--mouse-x', x + 'px');
         card.style.setProperty('--mouse-y', y + 'px');
       });
@@ -464,17 +480,13 @@ class PortfolioManager {
   }
 
   setupColorTransitions() {
-    // Transition des couleurs d'accent basée sur le scroll
     let ticking = false;
-    
     const updateColors = () => {
-      const scrollPercent = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
-      const hue = 260 + (scrollPercent * 60); // De violet à cyan
-      
+      const pct = window.pageYOffset / (document.body.scrollHeight - window.innerHeight || 1);
+      const hue = 260 + pct * 60; // de violet à cyan
       document.documentElement.style.setProperty('--dynamic-hue', hue);
       ticking = false;
     };
-
     window.addEventListener('scroll', () => {
       if (!ticking) {
         requestAnimationFrame(updateColors);
@@ -485,7 +497,6 @@ class PortfolioManager {
 
   // ===== GESTION DES CONTACTS =====
   setupContactHandling() {
-    // Copier l'email au clic
     const emailCard = document.querySelector('[href^="mailto:"]');
     if (emailCard) {
       emailCard.addEventListener('click', (e) => {
@@ -496,8 +507,7 @@ class PortfolioManager {
       });
     }
 
-    // Tracking des clics sur les liens sociaux
-    document.querySelectorAll('.contact-card, .footer-social a').forEach(link => {
+    document.querySelectorAll('.contact-card, .footer-social a').forEach((link) => {
       link.addEventListener('click', () => {
         const platform = this.detectPlatform(link.href);
         this.trackEvent('contact_click', { platform });
@@ -509,7 +519,6 @@ class PortfolioManager {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
     } else {
-      // Fallback pour les navigateurs plus anciens
       const textArea = document.createElement('textarea');
       textArea.value = text;
       document.body.appendChild(textArea);
@@ -523,35 +532,19 @@ class PortfolioManager {
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.style.cssText = `
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--gradient-primary);
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      z-index: 10001;
-      transform: translateY(100px);
-      transition: transform 0.3s ease;
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--gradient-primary); color: #fff;
+      padding: 1rem 1.5rem; border-radius: 50px; font-weight: 600;
+      z-index: 10001; transform: translateY(100px); transition: transform .3s ease;
       box-shadow: var(--shadow-medium);
     `;
     toast.textContent = message;
-    
     document.body.appendChild(toast);
-    
-    // Animation d'apparition
-    setTimeout(() => {
-      toast.style.transform = 'translateY(0)';
-    }, 100);
-    
-    // Animation de disparition
+    setTimeout(() => (toast.style.transform = 'translateY(0)'), 60);
     setTimeout(() => {
       toast.style.transform = 'translateY(100px)';
-      setTimeout(() => {
-        document.body.removeChild(toast);
-      }, 300);
-    }, 3000);
+      setTimeout(() => document.body.removeChild(toast), 300);
+    }, 2600);
   }
 
   detectPlatform(href) {
@@ -564,22 +557,16 @@ class PortfolioManager {
 
   // ===== OPTIMISATIONS PERFORMANCE =====
   setupPerformanceOptimizations() {
-    // Lazy loading des images
     this.setupLazyLoading();
-    
-    // Préchargement des ressources critiques
     this.preloadCriticalResources();
-    
-    // Débounce du redimensionnement
     this.setupResponsiveHandling();
   }
 
   setupLazyLoading() {
     const images = document.querySelectorAll('img[data-src]');
-    
     if ('IntersectionObserver' in window) {
       const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const img = entry.target;
             img.src = img.dataset.src;
@@ -588,117 +575,91 @@ class PortfolioManager {
           }
         });
       });
-
-      images.forEach(img => imageObserver.observe(img));
+      images.forEach((img) => imageObserver.observe(img));
     } else {
-      // Fallback pour les navigateurs sans IntersectionObserver
-      images.forEach(img => {
-        img.src = img.dataset.src;
-      });
+      images.forEach((img) => (img.src = img.dataset.src));
     }
   }
 
   preloadCriticalResources() {
-    const criticalImages = [
-      // Ajouter ici les images critiques à précharger
-    ];
-
-    criticalImages.forEach(src => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      document.head.appendChild(link);
-    });
+    // Ajoute ici les images critiques si besoin, ex:
+    // ['img/profile.png'].forEach(src => { ... })
   }
 
   setupResponsiveHandling() {
     let resizeTimer;
-    
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        this.handleResize();
-      }, 250);
+      resizeTimer = setTimeout(() => this.handleResize(), 200);
     });
+    this.handleResize();
   }
 
   handleResize() {
-    // Réajuster les animations basées sur la taille d'écran
     const isMobile = window.innerWidth < 768;
-    
-    if (isMobile) {
-      // Désactiver certaines animations sur mobile pour les performances
-      document.body.classList.add('mobile-optimized');
-    } else {
-      document.body.classList.remove('mobile-optimized');
-    }
+    document.body.classList.toggle('mobile-optimized', isMobile);
   }
 
   // ===== DONNÉES DES PROJETS =====
   getProjectData() {
     return {
-      'projet1': {
+      projet1: {
         title: 'Site Atos',
-        description: 'Développé en équipe de 3 personnes, ce site fictif présente la société Atos aux collégiens en recherche de stage d\'observation. Le projet met l accent sur la transition écologique de lentreprise.',
+        description:
+          "Développé en équipe de 3 personnes, ce site fictif présente la société Atos aux collégiens en recherche de stage d'observation. Le projet met l'accent sur la transition écologique de l'entreprise.",
         features: [
-          'Présentation adaptée aux jeunes collégiens',
+          'Présentation adaptée aux collégiens',
           'Mise en avant de la transition écologique',
           'Interface de contact simplifiée'
         ],
-        challenges: 'Développement frontend, Wire framing et tests utilisateurs du site.',
-        duration: '1 mois',
+        contribution: 'Développement frontend, wireframing et tests utilisateurs.',
+        duration: '6 semaines',
         status: 'Finalisé',
         type: 'Site web',
-        technologies: ['HTML','CSS','JavaScript'],
+        technologies: ['HTML', 'CSS', 'JavaScript'],
         github: 'https://github.com/Ulio05/SAE-5-6'
       },
-      'projet2': {
+      projet2: {
         title: 'IA de classification',
-        description: 'Intelligence artificielle utilisant l\'apprentissage automatique pour classifier des dépêches par catégorie. L\'algorithme s\'entraîne sur un corpus de dépêches et identifie les mots représentatifs de chaque catégorie.',
+        description:
+          "Apprentissage automatique pour classifier des dépêches par catégorie. Entraînement sur un corpus et extraction de mots représentatifs.",
         features: [
           'Classification automatique précise',
-          'Gestion de deadlines serrées (5 jours)',
-          'Développement sans indications préalables',
-          'Système d\'alertes automatiques'
+          'Respect de deadlines serrées (5 jours)',
+          'Développement sans indications préalables'
         ],
-        challenges: 'Développement de l\'algorithme, tests et débogage, et optimisation des performances.',
-        results: 'Le dashboard traite maintenant plus de 1 million de points de données par jour avec une latence moyenne de 50ms.',
+        contribution: "Développement de l'algorithme, tests, débogage et optimisation.",
         duration: '5 jours',
         status: 'Finalisé',
         type: 'Projet Java',
-        technologies: ['Java'],
+        technologies: ['Java', 'Machine Learning'],
         github: 'https://github.com/Aminne629/sae01-02'
       },
-      'projet3': {
+      projet3: {
         title: 'Calculatrice',
-        description: 'Application de calculatrice simple développée en autonomie complète pendant mon temps libre. Capable d\'effectuer les quatre opérations de base : addition, soustraction, multiplication et division.',
+        description:
+          "Application de calculatrice simple développée en autonomie complète. Effectue addition, soustraction, multiplication et division.",
         features: [
           'Travail en totale autonomie',
-          'Approfondissement des connaissances en Java',
-          'Gestion d\'un projet personnel'
+          'Approfondissement de Java',
+          'Gestion de projet personnel'
         ],
-        challenges: 'Tout',
-        duration: '1 mois',
+        contribution: 'Développement complet (UI Swing, logique, tests).',
+        duration: '2 semaines',
         status: 'Finalisé',
         type: 'Application Java',
-        technologies: ['Java'],
-        github: 'pas de lien GitHub pour ce projet'
+        technologies: ['Java', 'Swing'],
+        github: null
       }
     };
   }
 
   // ===== UTILITAIRES =====
   trackEvent(eventName, properties = {}) {
-    // Intégration avec Google Analytics ou autre service d'analytics
-    if (typeof gtag !== 'undefined') {
-      gtag('event', eventName, properties);
-    }
-    
-    console.log(`Event tracked: ${eventName}`, properties);
+    if (typeof gtag !== 'undefined') gtag('event', eventName, properties);
+    // console.debug(`Event: ${eventName}`, properties);
   }
 
-  // Méthode pour ajouter dynamiquement des projets
   addProject(id, projectData) {
     this.projectData[id] = projectData;
     const modal = this.createModalHTML(id, projectData);
@@ -706,52 +667,32 @@ class PortfolioManager {
     this.modals.set(id, modal);
   }
 
-  // Méthode pour mettre à jour un projet
   updateProject(id, projectData) {
-    if (this.modals.has(id)) {
-      this.projectData[id] = { ...this.projectData[id], ...projectData };
-      const oldModal = this.modals.get(id);
-      const newModal = this.createModalHTML(id, this.projectData[id]);
-      oldModal.replaceWith(newModal);
-      this.modals.set(id, newModal);
-    }
+    if (!this.modals.has(id)) return;
+    this.projectData[id] = { ...this.projectData[id], ...projectData };
+    const oldModal = this.modals.get(id);
+    const newModal = this.createModalHTML(id, this.projectData[id]);
+    oldModal.replaceWith(newModal);
+    this.modals.set(id, newModal);
   }
 }
 
 // ===== INITIALISATION =====
-// Créer une instance unique du gestionnaire
 const portfolioManager = new PortfolioManager();
-
-// Exposer globalement pour l'accès depuis la console (utile pour le debug)
 window.portfolioManager = portfolioManager;
 
-// ===== CSS SUPPLÉMENTAIRE POUR LES EFFETS JS =====
+// ===== CSS SUPPLÉMENTAIRE (JS) =====
 const additionalStyles = `
   .mobile-optimized * {
     transition-duration: 0.1s !important;
     animation-duration: 0.1s !important;
   }
-  
-  .lazy {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .lazy.loaded {
-    opacity: 1;
-  }
-  
+  .lazy { opacity: 0; transition: opacity 0.3s; }
+  .lazy.loaded { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
-    .mobile-optimized * {
-      animation: none !important;
-      transition: none !important;
-    }
+    .mobile-optimized * { animation: none !important; transition: none !important; }
   }
 `;
-
-// Injecter les styles supplémentaires
 const styleSheet = document.createElement('style');
 styleSheet.textContent = additionalStyles;
 document.head.appendChild(styleSheet);
-
-console.log('🎨 Portfolio JavaScript chargé avec succès !');
