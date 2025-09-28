@@ -307,6 +307,16 @@ body {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
+/*
+ * Les icônes Font Awesome (fa-solid) ne sont pas colorées par défaut. Pour
+ * harmoniser l'apparence avec les pictogrammes Devicon « colored », on
+ * applique la couleur primaire du thème. Cela laisse les pictogrammes
+ * Devicon intacts car leurs couleurs sont définies dans leurs SVG.
+ */
+.stack-card .fa-solid {
+  color: var(--accent-color);
+}
+
 /* Nom du langage/outil */
 .stack-card span {
   font-size: 1rem;
