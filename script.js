@@ -17,8 +17,7 @@ class PortfolioManager {
   setupComponents() {
     this.setupModals();
     this.setupNavigation();
-    this.setupTypewriter();
-    this.setupScrollAnimations();
+    // this.setupTypewriter(); // Typewriter effect removed
     this.setupThemeEffects();
     this.setupContactHandling();
     this.setupPerformanceOptimizations();
@@ -285,24 +284,7 @@ class PortfolioManager {
   setupDynamicIsland() {
     const island = document.querySelector('.dynamic-island');
     if (!island) return;
-
-    let isExpanded = false;
-
-    island.addEventListener('mouseenter', () => {
-      if (!isExpanded) {
-        this.expandIsland();
-        isExpanded = true;
-      }
-    });
-
-    island.addEventListener('mouseleave', () => {
-      setTimeout(() => {
-        if (isExpanded) {
-          this.contractIsland();
-          isExpanded = false;
-        }
-      }, 800);
-    });
+    // Les actions d’extension et de contraction sont supprimées pour conserver uniquement les icônes
 
     island.addEventListener('click', (e) => {
       const navDot = e.target.closest('.nav-dot');
@@ -343,7 +325,7 @@ class PortfolioManager {
   scrollToSection(target) {
     const element = document.querySelector(target);
     if (!element) return;
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     this.updateActiveNavigation(target.substring(1));
   }
 
@@ -401,33 +383,6 @@ class PortfolioManager {
     };
 
     setTimeout(type, 600);
-  }
-
-  // ===== ANIMATIONS AU SCROLL =====
-  setupScrollAnimations() {
-    const animationObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    const animatedElements = document.querySelectorAll(
-      `.story-card, .skill-category, .formation-card, .goals-card,
-       .project-card, .contact-card, .stack-card`
-    );
-
-    animatedElements.forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = `opacity 0.6s ease ${index * 0.06}s, transform 0.6s ease ${index * 0.06}s`;
-      animationObserver.observe(el);
-    });
   }
 
   // ===== EFFETS THÉMATIQUES =====
@@ -604,9 +559,9 @@ class PortfolioManager {
   getProjectData() {
     return {
       projet1: {
-        title: 'Site Atos',
+        title: 'Site ESN',
         description:
-          "Développé en équipe de 3 personnes, ce site fictif présente la société Atos aux collégiens en recherche de stage d'observation. Le projet met l'accent sur la transition écologique de l'entreprise.",
+          "Développé en équipe de 3 personnes, ce site fictif présente une ESN aux collégiens en recherche de stage d'observation. Le projet met l'accent sur la transition écologique de l'entreprise.",
         features: [
           'Présentation adaptée aux collégiens',
           'Mise en avant de la transition écologique',
@@ -616,7 +571,7 @@ class PortfolioManager {
         duration: '6 semaines',
         status: 'Finalisé',
         type: 'Site web',
-        technologies: ['HTML', 'CSS', 'JavaScript'],
+        technologies: ['HTML,', 'CSS,', 'JavaScript'],
         github: 'https://github.com/Ulio05/SAE-5-6'
       },
       projet2: {
@@ -632,7 +587,7 @@ class PortfolioManager {
         duration: '5 jours',
         status: 'Finalisé',
         type: 'Projet Java',
-        technologies: ['Java', 'Machine Learning'],
+        technologies: ['Java', 'GitHub'],
         github: 'https://github.com/Aminne629/sae01-02'
       },
       projet3: {
@@ -648,7 +603,7 @@ class PortfolioManager {
         duration: '2 semaines',
         status: 'Finalisé',
         type: 'Application Java',
-        technologies: ['Java', 'Swing'],
+        technologies: ['Java'],
         github: null
       }
     };

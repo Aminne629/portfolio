@@ -7,9 +7,6 @@
   <link rel="stylesheet" href="style.css" />
   <!-- Font Awesome for various icons (navigation, projects, etc.) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <!-- Devicon provides a large collection of development language and tool icons.  Including it via CDN
-       allows us to reference icons with classes like `devicon-html5-plain`. Using the `colored` variant
-       automatically applies the official brand colours. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 </head>
 <body>
@@ -17,19 +14,19 @@
   <nav class="dynamic-island" id="dynamicIsland">
     <div class="island-content">
       <div class="nav-items">
-        <a href="#hero" class="nav-dot active" data-section="hero">
+        <a href="#hero" class="nav-dot active" data-section="hero" aria-label="Accueil" title="Accueil">
           <i class="fas fa-home"></i><span>Accueil</span>
         </a>
-        <a href="#about" class="nav-dot" data-section="about">
+        <a href="#about" class="nav-dot" data-section="about" aria-label="À propos" title="À propos">
           <i class="fas fa-user"></i><span>À propos</span>
         </a>
-        <a href="#langages" class="nav-dot" data-section="langages">
-          <i class="fas fa-code"></i><span>Langages</span>
+        <a href="#langages" class="nav-dot" data-section="langages" aria-label="Langages et outils" title="Langages et outils">
+          <i class="fas fa-laptop-code"></i><span>Langages</span>
         </a>
-        <a href="#projects" class="nav-dot" data-section="projects">
-          <i class="fas fa-code"></i><span>Projets</span>
+        <a href="#projects" class="nav-dot" data-section="projects" aria-label="Mes projets" title="Mes projets">
+          <i class="fas fa-diagram-project"></i><span>Projets</span>
         </a>
-        <a href="#contact" class="nav-dot" data-section="contact">
+        <a href="#contact" class="nav-dot" data-section="contact" aria-label="Contact" title="Contact">
           <i class="fas fa-envelope"></i><span>Contact</span>
         </a>
       </div>
@@ -40,12 +37,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
       <div class="hero-container">
-        <div class="floating-profile">
-          <div class="profile-bubble">
-            <img src="img/profile.png" alt="Amine Benaziza" class="profile-img">
-            <div class="profile-ring"></div>
-          </div>
-        </div>
+        <!-- (profile removed for cleaner hero) -->
 
         <div class="hero-content">
           <div class="text-reveal">
@@ -56,10 +48,18 @@
             <div class="role-container">
               <span class="role-prefix">Je suis</span>
               <!-- Remplacement de l'effet d'écriture par un slogan plus sobre mais dynamique -->
-              <span class="role">développeur&nbsp;&amp;&nbsp;créatif</span>
+              <span class="role">développeur junior&nbsp;&amp;&nbsp;motivé</span>
             </div>
-            <p class="hero-subtitle">Less is more, mais pas pour moi.</p>
+            <!-- Liste de mots‑clés sous forme de chips pour un ton chaleureux -->
+            <!--  
+            <div class="hero-chips">
+              <span>Web</span>
+              <span>Java</span>
+              <span>Projets persos</span>
+              <span>Graphes</span>
+            </div>
           </div>
+          -->
 
           <div class="hero-actions">
             <a href="#projects" class="cta-primary">
@@ -67,8 +67,8 @@
               <i class="fas fa-arrow-right"></i>
             </a>
             <a href="#contact" class="cta-secondary">
-              <span>Discutons ensemble</span>
-              <i class="fas fa-comments"></i>
+              <span>Me contacter</span>
+              <i class="fas fa-envelope"></i>
             </a>
           </div>
         </div>
@@ -82,58 +82,28 @@
         <div class="title-decoration"></div>
       </div>
 
-      <div class="about-mosaic">
-        <!-- Main Story Card -->
-        <div class="story-card main-card">
-          <div class="card-header">
-            <i class="fas fa-user-circle"></i>
-            <h3>Formation</h3>
-          </div>
-          <div class="story-content">
-            <p>Étudiant de 18 ans en BUT Informatique à Grenoble, je suis passionné par le développement web et les nouvelles technologies.</p>
-            <p>Mon objectif : devenir développeur full-stack et créer ma propre entreprise.</p>
-            <p>Centres d'intérêt : jeux vidéo, sport, hardware et bien plus.</p>
-            <p>Je recherche des défis et des opportunités pour apprendre et progresser.</p>
-            <p>J’aime travailler en équipe et partager mes connaissances.</p>
-          </div>
+      <div class="about-grid">
+        <div class="about-card brief-card">
+          <div class="about-icon"><i class="fas fa-user"></i></div>
+          <h3>En bref</h3>
+          <p>Étudiant en BUT Informatique à Grenoble, je suis passionné par le développement web et les nouvelles technologies.</p>
+          <p>Je cultive des centres d’intérêt variés : jeux vidéo, sport, hardware et bien plus, et j’aime travailler en équipe et partager mes connaissances.</p>
         </div>
-
-        <!-- Skills Grid -->
-        <div class="skills-mosaic">
-          <!-- La catégorie des compétences techniques est déplacée dans la section Tech Stack. -->
-
-          <div class="skill-category soft-skills">
-            <h4><i class="fas fa-brain"></i> Soft skills</h4>
-            <div class="skill-list">
-              <div class="skill-item"><i class="fas fa-users"></i><span>Travail d’équipe</span></div>
-              <div class="skill-item"><i class="fas fa-clock"></i><span>Gestion du temps</span></div>
-              <div class="skill-item"><i class="fas fa-lightbulb"></i><span>Résolution de problèmes</span></div>
-              <div class="skill-item"><i class="fas fa-comments"></i><span>Communication</span></div>
-            </div>
-          </div>
+        <div class="about-card today-card">
+          <div class="about-icon"><i class="fas fa-calendar-day"></i></div>
+          <h3>Aujourd’hui</h3>
+          <p>Je poursuis actuellement ma première année de BUT Informatique à l’IUT de Grenoble où je développe mes compétences en programmation, conception de projets et bases de données.</p>
+          <p>Cette formation complète m’aide à progresser vers mon objectif de devenir développeur full‑stack.</p>
         </div>
-
-        <!-- Formation Card -->
-        <div class="formation-card">
-          <div class="card-icon"><i class="fas fa-university"></i></div>
-          <div class="formation-content">
-            <h4>Formation actuelle</h4>
-            <p class="formation-title">BUT Informatique</p>
-            <p class="formation-school">IUT de Grenoble — 1ère année</p>
-            <p class="formation-desc">Formation complète avec une équipe pédagogique expérimentée.</p>
-          </div>
-        </div>
-
-        <!-- Goals Card -->
-        <div class="goals-card">
-          <div class="goals-header">
-            <i class="fas fa-rocket"></i>
-            <h4>Mes objectifs</h4>
-          </div>
-          <div class="goals-list">
-            <div class="goal-item"><i class="fas fa-check-circle"></i><span>Devenir développeur full-stack</span></div>
-            <div class="goal-item"><i class="fas fa-building"></i><span>Créer ma propre entreprise</span></div>
-          </div>
+        <div class="about-card skills-card">
+          <div class="about-icon"><i class="fas fa-star"></i></div>
+          <h3>Compétences transversales</h3>
+          <ul>
+            <li>Travail d’équipe</li>
+            <li>Gestion du temps</li>
+            <li>Résolution de problèmes</li>
+            <li>Communication</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -227,10 +197,25 @@
             <i class="devicon-intellij-plain colored"></i>
             <span>IntelliJ IDEA</span>
           </a>
+          <!-- clion -->
           <a class="stack-card" href="https://www.jetbrains.com/fr-fr/clion/" target="_blank" rel="noopener">
             <i class="devicon-clion-plain colored"></i>
             <span>CLion</span>
           </a>
+          <!-- debian -->
+          <a class="stack-card" href="https://www.debian.org/index.fr.html" target="_blank" rel="noopener">
+            <i class="devicon-debian-plain colored"></i>
+            <span>Debian</span>
+          </a>
+          <!--ubuntu -->
+          <a class="stack-card" href="https://ubuntu.com/" target="_blank" rel="noopener">
+            <i class="devicon-ubuntu-plain colored"></i>
+            <span>Ubuntu</span>
+          </a>
+          
+
+
+
 
 
         </div>
@@ -249,9 +234,10 @@
         <article class="project-card" data-project="projet1" aria-label="Ouvrir le détail du projet Site Atos">
           <div class="project-icon"><i class="fa-solid fa-earth-europe"></i></div>
           <div class="project-preview">
-            <h3>Site Atos</h3>
-            <p>Site fictif pour présenter Atos à des collégiens en recherche de stage...</p>
+            <h3>Site ESN</h3>
+            <p>Site fictif pour présenter une ESN à des collégiens en recherche de stage...</p>
             <div class="tech-tags"><span>HTML/CSS</span><span>JavaScript</span></div>
+            <div class="buttonplus">+</div>
           </div>
         </article>
 
@@ -260,8 +246,9 @@
           <div class="project-icon"><i class="fa-solid fa-robot"></i></div>
           <div class="project-preview">
             <h3>IA de Classification</h3>
-            <p>Apprentissage automatique pour classer des dépêches par catégorie...</p>
+            <p>Développement d'un algorithme de classification de dépêches...</p>
             <div class="tech-tags"><span>Java</span><span>ML</span></div>
+            <div class="buttonplus">+</div>
           </div>
         </article>
 
@@ -272,6 +259,7 @@
             <h3>Calculatrice</h3>
             <p>Application de calculatrice simple en Java (opérations de base)...</p>
             <div class="tech-tags"><span>Java</span><span>Swing</span></div>
+            <div class="buttonplus">+</div>
           </div>
         </article>
       </div>
@@ -284,37 +272,19 @@
         <div class="title-decoration"></div>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-intro">
-          <h3>Discutons</h3>
-          <p>N’hésitez pas à me contacter pour discuter d’opportunités professionnelles.</p>
-        </div>
-
-        <div class="contact-methods">
-          <a href="mailto:aminekx3@gmail.com" class="contact-card email-card">
-            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-            <div class="contact-info">
-              <h4>Email</h4><span>aminekx3@gmail.com</span>
-            </div>
-            <div class="contact-arrow"><i class="fas fa-arrow-right"></i></div>
-          </a>
-
-          <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" class="contact-card linkedin-card" rel="noopener">
-            <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
-            <div class="contact-info">
-              <h4>LinkedIn</h4><span>Amine Benaziza</span>
-            </div>
-            <div class="contact-arrow"><i class="fas fa-external-link-alt"></i></div>
-          </a>
-
-          <a href="https://github.com/Aminne629" target="_blank" class="contact-card github-card" rel="noopener">
-            <div class="contact-icon"><i class="fab fa-github"></i></div>
-            <div class="contact-info">
-              <h4>GitHub</h4><span>Aminne629</span>
-            </div>
-            <div class="contact-arrow"><i class="fas fa-external-link-alt"></i></div>
-          </a>
-        </div>
+      <div class="contact-buttons">
+        <a href="mailto:aminekx3@gmail.com" class="contact-btn contact-card" aria-label="Envoyer un email" title="Envoyer un email">
+          <span class="btn-icon"><i class="fas fa-envelope"></i></span>
+          <span>Email</span>
+        </a>
+        <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" rel="noopener" class="contact-btn contact-card" aria-label="Visiter mon LinkedIn" title="LinkedIn">
+          <span class="btn-icon"><i class="fab fa-linkedin"></i></span>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/Aminne629" target="_blank" rel="noopener" class="contact-btn contact-card" aria-label="Voir mon GitHub" title="GitHub">
+          <span class="btn-icon"><i class="fab fa-github"></i></span>
+          <span>GitHub</span>
+        </a>
       </div>
     </section>
   </main>
@@ -322,12 +292,8 @@
   <!-- Footer -->
   <footer class="modern-footer">
     <div class="footer-content">
-      <p>© 2025 Amine Benaziza — Développeur passionné</p>
-      <div class="footer-social">
-        <a href="https://github.com/Aminne629" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/amine-benaziza-65559235b/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
-        <a href="mailto:aminekx3@gmail.com"><i class="fas fa-envelope"></i></a>
-      </div>
+      <p>© 2025 Amine Benaziza</p>
+      
     </div>
   </footer>
 

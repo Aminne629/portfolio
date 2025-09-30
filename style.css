@@ -70,7 +70,17 @@ body {
   transition: all .3s ease; position: relative; overflow: hidden;
 }
 .nav-dot i { font-size: 16px; transition: all .3s ease; }
-.nav-dot span { opacity: 0; width: 0; overflow: hidden;  white-space: nowrap; transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;}
+.nav-dot span {
+  /* Hide the label text in navigation dots by default.  Always keep them hidden rather than
+     simply collapsing them.  This ensures that only icons are visible in the dynamic island
+     navigation, as requested. */
+  display: none !important;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+}
 .nav-dot:hover, .nav-dot.active { background: var(--gradient-primary); color: var(--text-primary); transform: scale(1.05); }
 .nav-dot:hover span, .nav-dot.active span { opacity: 1; max-width: 150px; margin-left: 6px; }
 .nav-dot::before {
@@ -90,7 +100,12 @@ body {
 }
 .hero-container {
   max-width: 1200px; width: 100%; padding: 0 2rem;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative;
+  display: grid;
+  /* La section hero utilise désormais une seule colonne car l'image de profil a été retirée */
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
 }
 .floating-profile { display: flex; justify-content: center; align-items: center; position: relative; perspective: 1000px; }
 .profile-bubble { position: relative; transform-style: preserve-3d; will-change: transform; animation: smoothFloat 6s ease-in-out infinite; }
@@ -465,6 +480,23 @@ body {
   margin-top: .5rem; 
 }
 
+.buttonplus { 
+  background: var(--gradient-secondary); 
+  color: #fff; 
+  padding: .35rem .9rem; 
+  border-radius: 50px; 
+  font-size: .8rem; 
+  font-weight: 500; 
+  transition: transform .2s ease;
+  max-width: fit-content;
+  font-weight: 700 ;
+}
+
+.buttonplus:hover{
+  transform: scale(1.05); 
+  box-shadow: var(--shadow-soft); 
+}
+
 .tech-tags span { 
   background: var(--gradient-secondary); 
   color: #fff; 
@@ -689,7 +721,7 @@ body {
 /* === CONTACT === */
 .contact-section { 
   padding: 6rem 2rem; 
-  background: var(--bg-primary); 
+  background: var(--bg-secondary); 
 }
 .contact-grid {
   max-width: 1000px; 
@@ -774,7 +806,7 @@ body {
 
 /* === FOOTER === */
 .modern-footer { 
-  background: var(--bg-secondary); 
+  background: var(--bg-primary); 
   padding: 3rem 2rem; 
   border-top: 1px solid var(--border-primary); 
 }
@@ -808,6 +840,130 @@ body {
   transform: translateY(-3px); 
 }
 
+/* === NOUVEAUX ELEMENTS PERSONNALISÉS === */
+/* Masquer les libellés dans la navigation — icônes uniquement */
+.nav-dot span {
+  display: none !important;
+}
+
+/* Style pour les chips de la section Hero */
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.hero-chips span {
+  background: var(--gradient-secondary);
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+  transition: all 0.3s ease;
+}
+.hero-chips span:hover {
+  transform: scale(1.05);
+}
+
+/* Nouveau layout pour la section À propos */
+.about-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.about-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--accent-purple);
+}
+.about-card .about-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.about-card .about-icon i {
+  color: #fff;
+  font-size: 1.3rem;
+}
+.about-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--accent-purple);
+}
+.about-card p,
+.about-card li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.about-card ul {
+  padding-left: 1.2rem;
+}
+.about-card ul li {
+  list-style: disc;
+}
+
+/* Mise en page compacte pour la section Contact */
+.contact-buttons {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all .3s ease;
+}
+.contact-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-purple);
+  box-shadow: var(--shadow-soft);
+}
+.contact-btn .btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradient-secondary);
+  color: #fff;
+  flex-shrink: 0;
+}
+.contact-btn span {
+  font-weight: 600;
+}
 /* === RESPONSIVE === */
 @media (max-width: 1200px) {
   .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
