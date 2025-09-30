@@ -480,22 +480,46 @@ body {
   margin-top: .5rem; 
 }
 
-.buttonplus { 
-  background: var(--gradient-secondary); 
-  color: #fff; 
-  padding: .35rem .9rem; 
-  border-radius: 50px; 
-  font-size: .8rem; 
-  font-weight: 500; 
-  transition: transform .2s ease;
-  max-width: fit-content;
-  font-weight: 700 ;
+.buttonplus {
+  display: inline-flex;                /* ne prend que la largeur du contenu */
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  /* Dégradé sombre semi-transparent (teintes de violet et rose) */
+  background: linear-gradient(135deg,
+      rgba(124, 58, 237, 0.2),
+      rgba(236, 72, 153, 0.2)
+    );
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  backdrop-filter: blur(10px);         /* léger flou pour l’effet “glass” */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  max-width: max-content;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-.buttonplus:hover{
-  transform: scale(1.05); 
-  box-shadow: var(--shadow-soft); 
+.buttonplus:hover {
+  /* Accentuer légèrement le dégradé et l’ombre au survol */
+  background: linear-gradient(135deg,
+      rgba(124, 58, 237, 0.4),
+      rgba(236, 72, 153, 0.4)
+    );
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
+.buttonplus:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+
 
 .tech-tags span { 
   background: var(--gradient-secondary); 
@@ -530,6 +554,16 @@ body {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
 }
+
+/* Cas des images logos */
+.project-icon img {
+  max-width: 90%;      /* reste contenu */
+  max-height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+
 
 /* Content */
 .project-content {

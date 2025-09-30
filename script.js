@@ -34,19 +34,24 @@ class PortfolioManager {
     this.createMobileProjectDetails();
 
     // Gérer l'ouverture/fermeture selon la taille de l'écran
+    // Gérer l'ouverture/fermeture des modales
     document.addEventListener('click', (e) => {
-      const projectCard = e.target.closest('.project-card');
-      if (projectCard && projectCard.dataset.project) {
-        e.preventDefault();
-        const pid = projectCard.dataset.project;
-        // Sur mobile on affiche un détail intégré plutôt qu'une modale
-        if (document.body.classList.contains('mobile-optimized')) {
-          this.toggleMobileDetail(pid);
-        } else {
-          this.openModal(pid);
+      // 👉 n'ouvre que si on clique sur le bouton "Voir plus"
+      const button = e.target.closest('.buttonplus');
+      if (button) {
+        const projectCard = button.closest('.project-card');
+        if (projectCard && projectCard.dataset.project) {
+          e.preventDefault();
+          const pid = projectCard.dataset.project;
+          // Sur mobile : affiche le détail intégré, sinon ouvre la modale
+          if (document.body.classList.contains('mobile-optimized')) {
+            this.toggleMobileDetail(pid);
+          } else {
+            this.openModal(pid);
+          }
         }
       }
-
+    
       // Fermer les modales (overlay ou bouton close)
       if (
         e.target.classList.contains('modal-overlay') ||
@@ -56,6 +61,7 @@ class PortfolioManager {
         this.closeAllModals();
       }
     });
+    
 
     // Fermer les modales avec la touche Échap
     document.addEventListener('keydown', (e) => {
@@ -571,13 +577,13 @@ class PortfolioManager {
         duration: '6 semaines',
         status: 'Finalisé',
         type: 'Site web',
-        technologies: ['HTML,', 'CSS,', 'JavaScript'],
+        technologies: ['HTML, ', 'CSS, ', 'JavaScript'],
         github: 'https://github.com/Ulio05/SAE-5-6'
       },
       projet2: {
         title: 'IA de classification',
         description:
-          "Apprentissage automatique pour classifier des dépêches par catégorie. Entraînement sur un corpus et extraction de mots représentatifs.",
+          "Devloppé en équipe de 2, cet algorithme d'apprentissage automatique avait pour but classifier des dépêches par catégorie. L'entraînement se faisait sur un corpus par l'extraction de mots représentatifs.",
         features: [
           'Classification automatique précise',
           'Respect de deadlines serrées (5 jours)',
@@ -587,25 +593,60 @@ class PortfolioManager {
         duration: '5 jours',
         status: 'Finalisé',
         type: 'Projet Java',
-        technologies: ['Java', 'GitHub'],
+        technologies: ['Java, ', 'GitHub'],
         github: 'https://github.com/Aminne629/sae01-02'
       },
       projet3: {
-        title: 'Calculatrice',
+        title: 'Portfolio',
         description:
-          "Application de calculatrice simple développée en autonomie complète. Effectue addition, soustraction, multiplication et division.",
+          "Ce portfolio que vous voyez est un projet à part entière. Il a pour but de présenter mes compétences, expériences et projets de manière professionnelle et attrayante. Il est conçu pour être responsive, accessible et agréable à naviguer.",
         features: [
           'Travail en totale autonomie',
           'Approfondissement de Java',
           'Gestion de projet personnel'
         ],
-        contribution: 'Développement complet (UI Swing, logique, tests).',
+        contribution: 'Développement complet (UI, logique, tests).',
         duration: '2 semaines',
         status: 'Finalisé',
         type: 'Application Java',
         technologies: ['Java'],
         github: null
+      },
+      projet4:{
+        title: 'Data cleansing',
+        description:
+          "En équipe de 2, nous avons pris en main une énorme base de données sur les accidents de la route en France qui était extrêmement mal organisé, avec des tables inutiles et beaucoup de données redondantes par exemple. Le projet visait à analyser, nettoyer et valider les données pour en améliorer la qualité et la fiabilité.",
+        features: [
+          'Analyse approfondie des données',
+          'Utilisation de requêtes SQL avancées',
+          'Amélioration significative de la qualité des données'
+        ],
+        contribution: "Analyse, nettoyage et validation des données.",
+        duration: '1 semaine',
+        status: 'Finalisé',
+        type: 'Projet SQL',
+        technologies: ['SQL'],
+        github: null
+      },
+      projet5: {
+        title: "Fest'Event",
+        description:
+          "Développée en équipe de 5. Cette application avait pour but d'aider les particuliers à gerer les évènements qu'ils organisent. Permet la création, modification et suppression d'évènements avec une interface utilisateur intuitive. Regroupe aussi la vente de billets, l'ajout d'artistes/intervenants et un calendrier interne.",
+        features: [
+          "Interface utilisateur avec JavaFX",
+          'Visualisation des évènements dans un calendrier interne à l\'application',
+          'Gestion complète des évènements',
+          'Utilisation de GitHub pour le versioning'
+        ],
+        contribution: 'Reponsable UML, développement frontend et backend, gestion de versions.',
+        duration: '3 semaines',
+        status: 'Finalisé',
+        type: 'Application Java',
+        technologies: ['Java, ', 'JavaFX, ','UML, ', 'GitHub'],
+        github: null
       }
+      
+      
     };
   }
 
