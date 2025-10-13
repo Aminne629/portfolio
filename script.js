@@ -583,7 +583,7 @@ class PortfolioManager {
       projet2: {
         title: 'IA de classification',
         description:
-          "Devloppé en équipe de 2, cet algorithme d'apprentissage automatique avait pour but classifier des dépêches par catégorie. L'entraînement se faisait sur un corpus par l'extraction de mots représentatifs.",
+          "Devloppé en équipe de 2, cet algorithme d'apprentissage automatique a pour but classifier des dépêches par catégorie. L'entraînement se faisait sur un corpus par l'extraction de mots représentatifs.",
         features: [
           'Classification automatique précise',
           'Respect de deadlines serrées (5 jours)',
@@ -608,14 +608,14 @@ class PortfolioManager {
         contribution: 'Développement complet (UI, logique, tests).',
         duration: '2 semaines',
         status: 'Finalisé',
-        type: 'Application Java',
-        technologies: ['Java'],
+        type: 'Site web',
+        technologies: ['HTML, ', 'CSS, ', 'JavaScript'],
         github: null
       },
       projet4:{
         title: 'Data cleansing',
         description:
-          "En équipe de 2, nous avons pris en main une énorme base de données sur les accidents de la route en France qui était extrêmement mal organisé, avec des tables inutiles et beaucoup de données redondantes par exemple. Le projet visait à analyser, nettoyer et valider les données pour en améliorer la qualité et la fiabilité.",
+          "En équipe de 2, nous avons pris en main une énorme base de données sur les accidents de la route en France qui était extrêmement mal organisé, avec des tables inutiles et beaucoup de données redondantes par exemple. Le projet vise à analyser, nettoyer et valider les données pour en améliorer la qualité et la fiabilité.",
         features: [
           'Analyse approfondie des données',
           'Utilisation de requêtes SQL avancées',
@@ -631,7 +631,7 @@ class PortfolioManager {
       projet5: {
         title: "Fest'Event",
         description:
-          "Développée en équipe de 5. Cette application avait pour but d'aider les particuliers à gerer les évènements qu'ils organisent. Permet la création, modification et suppression d'évènements avec une interface utilisateur intuitive. Regroupe aussi la vente de billets, l'ajout d'artistes/intervenants et un calendrier interne.",
+          "Développée en équipe de 5. Cette application a pour but d'aider les particuliers à gerer les évènements qu'ils organisent. Elle permet la création, modification et suppression d'évènements avec une interface utilisateur intuitive. Elle regroupe aussi la vente de billets, l'ajout d'artistes/intervenants et un calendrier interne.",
         features: [
           "Interface utilisateur avec JavaFX",
           'Visualisation des évènements dans un calendrier interne à l\'application',

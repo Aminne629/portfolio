@@ -94,9 +94,12 @@ body {
 .hero-section {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
+  
+  
   background:
     radial-gradient(circle at 20% 80%, rgba(124,58,237,.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(236,72,153,.1) 0%, transparent 50%);
+  
 }
 .hero-container {
   max-width: 1200px; width: 100%; padding: 0 2rem;
@@ -106,6 +109,7 @@ body {
   gap: 4rem;
   align-items: center;
   position: relative;
+
 }
 .floating-profile { display: flex; justify-content: center; align-items: center; position: relative; perspective: 1000px; }
 .profile-bubble { position: relative; transform-style: preserve-3d; will-change: transform; animation: smoothFloat 6s ease-in-out infinite; }
@@ -163,7 +167,7 @@ body {
 .cta-secondary:hover { background: var(--glass-border); transform: translateY(-3px); }
 
 /* === SECTIONS COMMUNES === */
-.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header { text-align: center; margin-bottom: 4rem;  }
 .section-title {
   font-size: 3rem; font-weight: 700; margin-bottom: 1rem;
   background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -522,17 +526,18 @@ body {
 
 
 .tech-tags span { 
-  background: var(--gradient-secondary); 
-  color: #fff; 
-  padding: .35rem .9rem; 
+  background: var(--gradient-glass);
+  color: rgba(255, 255, 255, 0.7);
+  padding: .25rem .6rem; 
   border-radius: 50px; 
-  font-size: .8rem; 
-  font-weight: 500; 
+  font-size: .7rem; 
+  font-weight: 400;
   transition: transform .2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tech-tags span:hover { 
-  transform: scale(1.05); 
+   
   box-shadow: var(--shadow-soft); 
 }
 /* Status badge */
@@ -598,17 +603,17 @@ body {
 
 /* Tags */
 .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-.tech-tags span {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-  color: #fff;
-  padding: 0.4rem 0.9rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
-  transition: all 0.3s ease;
+.tech-tags span { 
+  background: var(--gradient-glass);
+  color: rgba(255, 255, 255, 0.7);
+  padding: .25rem .6rem; 
+  border-radius: 50px; 
+  font-size: .7rem; 
+  font-weight: 400;
+  transition: transform .2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.tech-tags span:hover { transform: scale(1.05); }
+
 
 /* Expand button */
 .project-expand {
@@ -897,9 +902,7 @@ body {
   box-shadow: 0 2px 8px rgba(124,58,237,0.3);
   transition: all 0.3s ease;
 }
-.hero-chips span:hover {
-  transform: scale(1.05);
-}
+
 
 /* Nouveau layout pour la section À propos */
 .about-grid {
