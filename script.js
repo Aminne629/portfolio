@@ -578,12 +578,12 @@ class PortfolioManager {
         status: 'Finalisé',
         type: 'Site web',
         technologies: ['HTML, ', 'CSS, ', 'JavaScript'],
-        github: 'https://github.com/Ulio05/SAE-5-6'
+        github: null
       },
       projet2: {
         title: 'IA de classification',
         description:
-          "Devloppé en équipe de 2, cet algorithme d'apprentissage automatique a pour but classifier des dépêches par catégorie. L'entraînement se faisait sur un corpus par l'extraction de mots représentatifs.",
+          "Developpé en équipe de 2, cet algorithme d'apprentissage automatique a pour but classifier des dépêches par catégorie. L'entraînement se faisait sur un corpus par l'extraction de mots représentatifs.",
         features: [
           'Classification automatique précise',
           'Respect de deadlines serrées (5 jours)',
@@ -594,7 +594,7 @@ class PortfolioManager {
         status: 'Finalisé',
         type: 'Projet Java',
         technologies: ['Java, ', 'GitHub'],
-        github: 'https://github.com/Aminne629/sae01-02'
+        github: null
       },
       projet3: {
         title: 'Portfolio',
