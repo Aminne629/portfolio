@@ -2,7 +2,7 @@ name: Mise à jour Portfolio
 on:
   push:
     branches:
-      - main  # Vérifie bien que ta branche principale s'appelle "main" (parfois c'est "master")
+      - main
 
 jobs:
   deploy:
@@ -11,10 +11,12 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      - name: 📂 Envoi vers Alwaysdata via FTP
+      - name: 📂 Envoi vers Alwaysdata via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /www/  # CHANGE CECI SI TON SITE EST DANS UN SOUS-DOSSIER
+          port: 22 # On force le port SSH/SFTP
+          protocol: sftp # On précise qu'on veut du SFTP
+          server-dir: /www/
