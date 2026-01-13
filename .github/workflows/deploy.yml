@@ -17,6 +17,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps # On utilise FTPS (sécurisé) au lieu de sftp
-          port: 21       # Le port standard pour le FTPS sur Alwaysdata
+          protocol: ftps
+          port: 21
           server-dir: /www/
+          # AJOUTE CETTE LIGNE CI-DESSOUS :
+          security: loose
