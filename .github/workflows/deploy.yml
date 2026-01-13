@@ -11,12 +11,12 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      - name: 📂 Envoi vers Alwaysdata via SFTP
+      - name: 📂 Envoi vers Alwaysdata via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 22 # On force le port SSH/SFTP
-          protocol: sftp # On précise qu'on veut du SFTP
+          protocol: ftps # On utilise FTPS (sécurisé) au lieu de sftp
+          port: 21       # Le port standard pour le FTPS sur Alwaysdata
           server-dir: /www/
