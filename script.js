@@ -644,9 +644,23 @@ class PortfolioManager {
         type: 'Application Java',
         technologies: ['Java, ', 'JavaFX, ','UML, ', 'GitHub'],
         github: null
+      },projet6: {
+        title: 'ALED',
+        description:
+          "ALED est une application web conçue pour centraliser tous les outils nécessaires aux aidants familiaux s'occupant d'une personne âgée. Elle unifie la gestion médicale, administrative et quotidienne au sein d'un espace collaboratif unique.",
+        features: [
+          'Agenda partagé pour la coordination des soins et visites',
+          'Suggestions de repas intelligentes basées sur les préférences et allergies',
+          'Gestion de documents sensibles (ordonnances) avec respect du RGPD',
+          'Génération automatique de listes de courses à partir des recettes'
+        ],
+        contribution: "Responsable technique : Conception de l'architecture MVC, modélisation de la base de données PostgreSQL et développement backend/frontend.",
+        duration: '4 mois (Septembre - Janvier)',
+        status: 'Finalisé',
+        type: 'Application Web',
+        technologies: ['PHP (MVC), ', 'PostgreSQL, ', 'JavaScript, ', 'Git'],
+        github: null
       }
-      
-      
     };
   }
 
