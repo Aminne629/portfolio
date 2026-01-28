@@ -399,16 +399,32 @@ body {
 .projects-grid {
   max-width: 1400px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;       /* Permet de passer à la ligne */
+  justify-content: center; /* Centre les éléments, même s'il n'y en a qu'un */
   gap: 2rem;
+  flex-direction: row;
   position: relative;
   z-index: 2;
 }
 
 /* === PROJET CARDS RÉVOLUTIONNAIRES === */
 /* Cartes de projet plus compactes */
+/* Dans style.css */
 .project-card {
+  /* flex: 0 1 350px;
+     - 0 : Ne grandis pas (reste à la taille de base si il y a de la place en trop)
+     - 1 : Rétrécis si l'écran est trop petit (mobile)
+     - 350px : La largeur idéale "cible" de la carte
+  */
+  flex: 0 1 350px;
+  
+  /* On garde tes contraintes de sécurité */
+  min-width: 300px;  /* Ne deviens jamais plus petit que ça (sauf si l'écran force) */
+  max-width: 400px;  /* Ne deviens jamais plus large que ça */
+  width: 100%;       /* Sécurité pour mobile pour prendre la largeur dispo */
+  
+  /* Le reste de ton style ne change pas... */
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
@@ -438,7 +454,7 @@ body {
 }
 
 .project-card:hover { 
-  transform: translateY(-6px); 
+  transform: translateY(0px); 
   box-shadow: var(--shadow-medium); 
   border-color: var(--accent-purple); 
 }
@@ -923,7 +939,7 @@ body {
   overflow: hidden;
 }
 .about-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(0px);
   box-shadow: var(--shadow-medium);
   border-color: var(--accent-purple);
 }
@@ -1394,4 +1410,42 @@ section {
   display: flex !important;
   flex-wrap: wrap !important;
   justify-content: center;
+}
+
+/* === ACTIONS PROJETS MOBILE === */
+.mobile-project-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Redéfinition de la taille pour le contexte mobile */
+.project-mobile-detail .btn-github,
+.project-mobile-detail .btn-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem; /* Plus compact que dans la modale */
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s ease;
+  margin-top: 0; /* Annule d'anciennes marges */
+}
+
+/* Couleurs cohérentes avec le thème */
+.project-mobile-detail .btn-demo {
+  background: var(--gradient-secondary); /* Dégradé Cyan/Rose */
+}
+
+.project-mobile-detail .btn-github {
+  background: var(--gradient-primary); /* Dégradé Violet/Rose */
+}
+
+.project-mobile-detail .btn-demo:hover,
+.project-mobile-detail .btn-github:hover {
+  transform: translateY(-2px);
 }

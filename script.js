@@ -43,9 +43,11 @@ class PortfolioManager {
         if (projectCard && projectCard.dataset.project) {
           e.preventDefault();
           const pid = projectCard.dataset.project;
+
+
           // Sur mobile : affiche le détail intégré, sinon ouvre la modale
           if (document.body.classList.contains('mobile-optimized')) {
-            this.toggleMobileDetail(pid);
+            this.toggleMobileDetail(pid, button);
           } else {
             this.openModal(pid);
           }
@@ -100,10 +102,18 @@ class PortfolioManager {
             <p><strong>Statut :</strong> ${project.status}</p>
             <p><strong>Type :</strong> ${project.type}</p>
           </div>
-          <div class="mobile-detail-technologies">
-            ${project.technologies.map((t) => `<span>${t}</span>`).join('')}
+          <div class="mobile-project-actions">
+            ${
+              project.site 
+              ? `<a href="${project.site}" class="btn-demo" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Voir le site</a>` 
+              : ''
+            }
+            ${
+              project.github 
+              ? `<a href="${project.github}" class="btn-github" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>` 
+              : ''
+            }
           </div>
-          ${project.github ? `<a href="${project.github}" class="btn-github" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>` : ''}
         </div>
       `;
       // Insérer le détail juste après la carte
@@ -114,17 +124,27 @@ class PortfolioManager {
   /**
    * Affiche ou masque le détail mobile du projet spécifié. Masque les autres détails si besoin.
    */
-  toggleMobileDetail(projectId) {
-    // Masquer toutes les autres fiches ouvertes
-    document.querySelectorAll('.project-mobile-detail').forEach((el) => {
-      if (el.getAttribute('data-project') !== projectId) {
-        el.style.display = 'none';
-      }
-    });
+  toggleMobileDetail(projectId, clickedButton) {
     const target = document.querySelector(`.project-mobile-detail[data-project="${projectId}"]`);
     if (!target) return;
-    // Bascule l'affichage
-    target.style.display = target.style.display === 'none' || target.style.display === '' ? 'block' : 'none';
+
+    // Vérifier si le projet cliqué est DÉJÀ ouvert
+    const isCurrentlyOpen = target.style.display === 'block';
+
+    // 1. D'abord, on ferme TOUT et on remet TOUS les boutons à "Voir plus"
+    document.querySelectorAll('.project-mobile-detail').forEach((el) => {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.buttonplus').forEach((btn) => {
+      btn.textContent = 'Voir plus';
+    });
+
+    // 2. Si le projet n'était pas ouvert, on l'ouvre et on change SON bouton
+    if (!isCurrentlyOpen) {
+      target.style.display = 'block';
+      // Petit délai pour l'animation éventuelle
+      if (clickedButton) clickedButton.textContent = 'Voir moins';
+    }
   }
 
   createProjectModals() {
@@ -187,6 +207,18 @@ class PortfolioManager {
                   ${project.technologies.map((t) => `<span>${t}</span>`).join('')}
                 </div>
               </div>
+
+              ${
+                project.site
+                  ? `
+                <div class="detail-card">
+                  <a href="${project.site}" class="btn-demo" target="_blank" rel="noopener">
+                    <i class="fas fa-external-link-alt"></i>
+                    Voir le site
+                  </a>
+                </div>`
+                  : ''
+              }
 
               ${
                 project.github
@@ -659,7 +691,8 @@ class PortfolioManager {
         status: 'Finalisé',
         type: 'Application Web',
         technologies: ['PHP (MVC), ', 'PostgreSQL, ', 'JavaScript, ', 'Git'],
-        github: null
+        github: null,
+        site: 'https://aled.alwaysdata.net/'
       }
     };
   }
