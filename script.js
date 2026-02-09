@@ -693,6 +693,21 @@ class PortfolioManager {
         technologies: ['PHP (MVC), ', 'PostgreSQL, ', 'JavaScript, ', 'Git'],
         github: null,
         site: 'https://aled.alwaysdata.net/'
+      },projet7: {
+        title: 'PIXELTYPE',
+        description: "Jeu de dactylographie pour tester la dextérité au clavier du joueur en tapant des mots affichés à l'écran. Le but est de taper le plus rapidement et précisément possible pour augmenter son score. Le jeu propose différents modes de jeu et un classement des meilleurs scores locaux.",
+        features: [
+          'Affichage de mots à taper avec difficulté croissante',
+          'Calcul du score basé sur la vitesse et la précision',
+          'Classement local des meilleurs scores'
+        ],
+        contribution: "Développement complet du jeu, conception des modes de jeu et gestion du classement local.",
+        duration: '2 semaines',
+        status: 'Finalisé',
+        type: 'Jeu Web',
+        technologies: ['HTML, ', 'CSS, ', 'JavaScript'],
+        github: null,
+        site:'jeu.html'
       }
     };
   }
