@@ -425,39 +425,8 @@ class PortfolioManager {
 
   // ===== EFFETS THÉMATIQUES =====
   setupThemeEffects() {
-    this.setupCursorEffect();
     this.setupHoverEffects();
     this.setupColorTransitions();
-  }
-
-  setupCursorEffect() {
-    const cursor = document.createElement('div');
-    cursor.className = 'custom-cursor';
-    cursor.style.cssText = `
-      position: fixed; width: 20px; height: 20px;
-      background: radial-gradient(circle, rgba(124,58,237,.3), transparent);
-      border-radius: 50%; pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%); transition: scale .2s ease; display: none;
-    `;
-    document.body.appendChild(cursor);
-
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      cursor.style.display = 'block';
-      document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-      document.addEventListener('mouseover', (e) => {
-        if (e.target.matches('a, button, .project-card, .contact-card')) {
-          cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-        }
-      });
-      document.addEventListener('mouseout', (e) => {
-        if (e.target.matches('a, button, .project-card, .contact-card')) {
-          cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-      });
-    }
   }
 
   setupHoverEffects() {

@@ -901,6 +901,12 @@ body {
   display: none !important;
 }
 
+.title-break {
+  display: block;
+  font-size: 0.5em; 
+  margin-top: 10px;
+}
+
 /* Style pour les chips de la section Hero */
 .hero-chips {
   display: flex;
@@ -1239,23 +1245,8 @@ section {
 }
 
 
-/* === PERFORMANCE === */
-.profile-img, .project-card, .contact-card, .story-card { will-change: transform; }
 
-/*
- * Annule le comportement de carrousel pour les sections Langages et Projets sur mobile.
- * Ces règles redéfinissent l'affichage en grille verticale plutôt qu'en déroulement horizontal.
- */
 @media (max-width: 768px) {
-  /*
-   * Sur petit écran, les sections Langages et Outils doivent conserver
-   * un affichage compact tout en s'alignant à l'horizontale puis en se
-   * répartissant sur plusieurs lignes quand l'espace manque.  Plutôt
-   * que de forcer une seule colonne comme auparavant, on utilise
-   * grid-auto-fit pour définir autant de colonnes que possible avec
-   * une largeur minimale raisonnable.  Cela crée un effet « wrap »
-   * automatique qui répond à la consigne de l'utilisateur.
-   */
   .stack-grid {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
@@ -1263,16 +1254,11 @@ section {
     overflow-x: visible !important;
   }
   .stack-card {
-    /* Les cartes retrouvent leur largeur flexible, sans contraintes de carrousel */
     min-width: auto !important;
     flex: none !important;
     scroll-snap-align: unset !important;
   }
-  /*
-   * Les projets restent sur une seule colonne en version mobile pour
-   * préserver une lecture verticale cohérente.  Cette règle est
-   * conservée mais reste distincte des cartes Langages/Outils.
-   */
+
   .projects-grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
@@ -1448,4 +1434,18 @@ section {
 .project-mobile-detail .btn-demo:hover,
 .project-mobile-detail .btn-github:hover {
   transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .project-card, .story-card, .skill-category, 
+  .formation-card, .goals-card, .stack-card, 
+  .contact-card, .project-mobile-detail, .island-content {
+    backdrop-filter: none !important;
+    background: #151525; 
+  }
+
+  .projects-section::before {
+    animation: none !important;
+    opacity: 0.2;
+  }
 }
